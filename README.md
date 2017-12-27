@@ -23,6 +23,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ## 备忘
 
 * 若需要同时打开别的项目，可使用以下命令行启动服务器
+ 
 ```bash
 # Window环境
 set PORT=3000 && npm run dev
@@ -37,6 +38,7 @@ PORT=3000 npm run dev
 
 * 建议将npm升级到 `@5.0.0` 以上
 * 请用 `jsdoc` 为文件做最基本的注释，示例：
+
 ```js
   /**
   * Vue Ajax请求插件
