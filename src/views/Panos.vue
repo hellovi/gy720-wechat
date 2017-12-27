@@ -32,63 +32,53 @@ export default {
 }
 </script>
 
-<style>
+<style lang="postcss">
 .panos {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0;
-  margin: 0 20px;
-}
+  margin: 0 0 0 20px;
 
-.pano {
-  width: 346px;
-  max-width: 346px;
-  margin-bottom: 20px;
-}
-
-.pano__image::before {
-  content: "";
-  float: left;
-  width: 1px;
-  margin-top: 100%;
-  margin-left: -1px;
-}
-
-.pano__image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.pano__info {
-  display: flex;
-  align-items: center;
-  height: calc(50 / 750 * 100vw);
-  min-height: 30px;
-  max-height: 50px;
-  background-color: #fff;
-  font-size: 24px;
-}
-
-.pano__avatar {
-  width: calc(54 / 345 * 100%);
-  min-width: 35px;
-  margin-left: calc(8 / 345 * 100%);
-  margin-right: calc(14 / 345 * 100%);
-  border-radius: 50%;
-  transform: translateY(-22%);
-}
-
-@media (min-width: 751px) {
-  .panos {
-    margin-right: -20px;
+  & .pano {
+    width: calc((100vw - 60px) / 2);
+    max-width: 346px;
+    margin: 0 20px 20px 0;
   }
 
-  .pano {
-    margin-right: 20px;
-    margin-bottom: 20px;
+  & .pano__image {
+    &::before {
+      content: "";
+      float: left;
+      width: 1px;
+      margin-top: 100%;
+      margin-left: -1px;
+    }
+
+    & img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  & .pano__info {
+    display: flex;
+    align-items: center;
+    height: calc(50 / 750 * 100vw);
+    min-height: 30px;
+    max-height: 50px;
+    background-color: #fff;
+    font-size: 24px;
+  }
+
+  & .pano__avatar {
+    width: calc(54 / 345 * 100%);
+    min-width: 35px;
+    margin-left: calc(8 / 345 * 100%);
+    margin-right: calc(14 / 345 * 100%);
+    border-radius: 50%;
+    transform: translateY(-22%);
   }
 }
 </style>

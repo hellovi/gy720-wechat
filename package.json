@@ -14,7 +14,8 @@
     "normalize.css": "^7.0.0",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
-    "weixin-js-sdk": "^1.2.0"
+    "weixin-js-sdk": "^1.2.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

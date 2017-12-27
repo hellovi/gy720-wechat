@@ -40,3 +40,8 @@
 .text-right {
   text-align: right !important;
 }
+
+/* 表单校验 */
+.is-danger {
+  color: var(--error);
+}

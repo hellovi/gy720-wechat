@@ -77,7 +77,7 @@ export default {
   min-height: 40px;
   max-height: 60px;
   padding: 0 calc(16 / 710 * 100%);
-  margin-bottom: 20px;
+  margin: 20px;
   background-color: #fff;
   font-size: 28px;
 
@@ -91,12 +91,6 @@ export default {
       background: transparent;
       color: #8b8b8b;
     }
-  }
-}
-
-@media (min-width: 600px) {
-  .filter-bar {
-    font-size: 16px;
   }
 }
 
@@ -134,7 +128,7 @@ export default {
 .filter__item {
   width: 120px;
   height: 60px;
-  line-height: 60px;
+  line-height: 58px;
   border: 1px solid #ccc;
   border-radius: 6px;
   margin: 10px;
@@ -183,9 +177,5 @@ export default {
       }
     }
   }
-}
-
-.app-filter-bar {
-  margin: 20px;
 }
 </style>
