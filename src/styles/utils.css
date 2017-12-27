@@ -1,0 +1,42 @@
+@import "vars.css";
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.ellipsis {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 浮动 */
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+/* 文本对齐 */
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
