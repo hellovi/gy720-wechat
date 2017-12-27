@@ -1,11 +1,17 @@
 <template>
   <div>
+    <!-- 顶部导航 -->
     <FilterBar />
+
+    <!-- 摄影师列表 -->
     <ul class="photographer-list">
       <li>
         <Photographer/>
       </li>
     </ul>
+
+    <!-- 底部导航 -->
+    <AppNavi />
   </div>
 </template>
 
@@ -18,8 +24,8 @@ export default {
 
 <style>
 .photographer-list {
+  padding: 0 20px;
   list-style: none;
-  padding: 0;
   margin: 0;
 }
 </style>

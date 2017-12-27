@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FilterBar class="app-filter-bar" />
+    <FilterBar/>
 
     <ul class="panos">
       <li
