@@ -2,12 +2,13 @@
  * http请求
  * @Author: chenliangshan
  * @Date: 2017-12-27 17:09:04
- * @Last Modified by:   chenliangshan
- * @Last Modified time: 2017-12-27 17:09:04
+ * @Last Modified by: chenliangshan
+ * @Last Modified time: 2017-12-28 11:00:17
  */
 
 
 import 'whatwg-fetch'
+import router from '@/router'
 
 const token = localStorage.getItem('token')
 
@@ -26,6 +27,7 @@ class Http {
       put: Http.put,
       delete: Http.delete,
       codepost: Http.codepost,
+      cpost: Http.cpost,
     }
   }
 
@@ -37,6 +39,11 @@ class Http {
         .then((res) => {
           if (!res.status || res.status.code === 1) {
             return res
+          }
+          if (res.status.code === 401) {
+            // 登录权限
+            localStorage.removeItem('token')
+            router.push('/login')
           }
           throw res
         })
@@ -165,6 +172,25 @@ class Http {
        * include: cookie既可以同域发送，也可以跨域发送
        */
       credentials: 'same-origin',
+    })
+      .then(Http.errorHandler)
+  }
+
+  /**
+   * 自定义表单数据格式
+   * @param {string} uri
+   * @param {any} body
+   * @param {Object} headers
+   */
+  static cpost(uri, body, headers = {}) {
+    return fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...defaultHeaders,
+        ...headers,
+      },
+      body,
     })
       .then(Http.errorHandler)
   }

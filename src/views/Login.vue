@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2017-12-27 18:51:32
+ * @Last Modified time: 2017-12-28 13:52:14
  */
 
 <template>
@@ -16,12 +16,12 @@
     <form class="app-login__form" novalidate>
       <div class="form-item">
         <svg fill="#888"><use href="#user"/></svg>
-        <input type="text" v-model="form.username" placeholder="请输入光鱼账号">
-        <!-- <span v-show="errors.has('username')" class="error is-danger">{{ errors.first('username') }}</span> -->
+        <input type="text" v-model="form.username" @blur="blurUserName" placeholder="请输入光鱼账号">
       </div>
       <div class="form-item">
         <svg fill="#888"><use href="#password"/></svg>
         <input type="password" v-model="form.password" placeholder="请输入密码">
+        <span v-show="formError.global" class="error is-danger">{{ formError.global }}</span>
       </div>
       <div class="form-submit">
         <button type="button" @click="formSubmit">登录</button>
@@ -40,9 +40,16 @@
         </div>
       </div>
       <div class="app-oauth__btn">
-        点击使用<a class="app-oauth__btn-weixin" href="">微信登录</a>
+        点击使用<a class="app-oauth__btn-weixin" href="/user/auth/weixin?from='/wechat'">微信登录</a>
       </div>
     </div>
+
+    <toast
+      :message = "toast.msg"
+      iconClass = "success"
+      :toastShow.sync = "toast.visible"
+      @toastClose = 'loginSkip'
+    ></toast>
   </div>
 </template>
 
@@ -61,26 +68,78 @@ export default {
         username: null,
         password: null,
       },
+
+      formError: {},
+
+      toast: {
+        msg: '',
+        visible: false,
+      },
     }
   },
 
   methods: {
     formSubmit() {
       const { username, password } = this.form
-      if (isEmailMobile(username)) {
-        const data = {}
-        if (isEmail(username)) data.email = username
-        else if (isMobile(username)) data.mobile = username
-        this.$http.post('/user/login', {
-          password,
-          ...data,
+      this.formError = {}
+      if (!username || !password) {
+        this.$set(this.formError, 'global', '账号或密码不能为空')
+      } else if (isEmailMobile(username)) {
+        let data = `client=moble&password=${password}&`
+        if (isEmail(username)) {
+          data += `email=${username}`
+        } else if (isMobile(username)) {
+          data += `mobile=${username}`
+        }
+
+        this.$http.cpost('/user/login', data, {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
         })
         .then((res) => {
-          // eslint-disable-next-line
-          console.log(res)
+          if (res.status.code === 1 && res.result.token) {
+            localStorage.setItem('token', res.result.token)
+            this.toast = {
+              msg: '登录成功',
+              visible: true,
+            }
+          }
         })
+        .catch(({ status }) => {
+          this.$set(this.formError, 'global', status.reason)
+        })
+      } else {
+        // 登录信息格式不正确处理
+        this.blurUserName()
       }
     },
+
+    blurUserName() {
+      if (!isEmailMobile(this.form.username)) {
+        this.$set(this.formError, 'global', '账号格式有误')
+      } else {
+        this.formError = {}
+      }
+    },
+
+    // 登录成功回调跳转
+    loginSkip() {
+      // TODO 跳转来自页面
+      this.$router.push('/')
+    },
+
+    pathSkip(path = '/') {
+      this.$router.push(path)
+    },
+  },
+
+  beforeRouteEnter(to, from, next) {
+    const token = localStorage.getItem('token')
+    next((vm) => {
+      if (token) {
+        // 已登录返回首页
+        vm.pathSkip()
+      }
+    })
   },
 }
 </script>
@@ -88,7 +147,7 @@ export default {
 <style lang="postcss">
 .app-login {
   width: 100vw;
-  height: 100vh;
+  height: 100vmax;
   overflow: hidden;
   background: url("../assets/bg.jpg") no-repeat top center;
   background-size: cover;

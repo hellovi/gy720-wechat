@@ -11,6 +11,8 @@ import * as views from '@/views'
 Vue.use(Router)
 
 const router = new Router({
+  base: 'wechat',
+  mode: 'history',
   routes: [
     {
       path: '/',
