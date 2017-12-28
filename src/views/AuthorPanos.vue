@@ -1,6 +1,7 @@
 <template>
   <div>
     摄影师作品列表
+
   </div>
 </template>
 
@@ -22,6 +23,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="postcss">
+@import 'vars.css';
 
 </style>

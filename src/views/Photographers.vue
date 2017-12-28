@@ -4,7 +4,7 @@
     <FilterBar />
 
     <!-- 摄影师列表 -->
-    <ul class="photographer-list">
+    <ul class="list photographer-list">
       <li
        v-for="item in data"
        :key="item.hash_user_id"
@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       data: [],
+      levels: [],
     }
   },
 
@@ -35,9 +36,18 @@ export default {
           this.data = [...this.data, ...authors.data]
         })
     },
+
+    // 获取摄影师等级标签数据源
+    getLevels() {
+      this.$http.get('/wechatapi/levels')
+        .then(({ result: { levels } }) => {
+          this.levels = levels
+        })
+    },
   },
 
   created() {
+    this.getLevels()
     this.getData(1)
   },
 }
@@ -46,10 +56,8 @@ export default {
 <style lang="postcss">
 .photographer-list {
   padding: 0 20px;
-  list-style: none;
-  margin: 0;
 
-  & li:not(:last-child) {
+  &>li:not(:last-child) {
     margin-bottom: 20px;
   }
 }
