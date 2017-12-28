@@ -2,21 +2,24 @@
   <div class="photographer">
 
     <!-- 认证标志 -->
-    <div class="photographer__label">
+    <div
+      v-if="data.is_certificate"
+      class="photographer__label"
+    >
       <span>企业认证</span>
     </div>
 
     <!-- 头像 -->
     <div class="photographer__avatar">
       <router-link
-        to="/mypanos"
-        :style="{backgroundImage:`url(${require('@/assets/default.jpg')})`}"
-        title="图片说明"
+        :to="`/author/${data.hash_user_id}`"
+        :style="{backgroundImage:`url(${imgFormat(data.avatar)})`}"
+        :title="`${data.nickname}`"
       ></router-link>
     </div>
 
     <!-- 用户名 -->
-    <div class="photographer__name">包着海苔的饭团包着海苔的饭团包着海苔的饭团包着海苔的饭团包着海苔的饭团</div>
+    <div class="photographer__name">{{data.nickname}}</div>
 
     <!-- 用户信息 -->
     <ul class="photographer__meta">
@@ -24,36 +27,38 @@
         <svg fill="#C2C2C2" class="photographer__meta__icon">
           <use href="#photo"/>
         </svg>
-        <span>23</span>
+        <span>{{ data.panoramas }}</span>
       </li>
       <li>
         <svg fill="#C2C2C2" class="photographer__meta__icon">
           <use href="#eye"/>
         </svg>
-        <span>{{ 193324 | visited}}</span>
+        <span>{{ data.popular | visited}}</span>
       </li>
       <li>
         <svg fill="#C2C2C2" class="photographer__meta__icon">
           <use href="#like"/>
         </svg>
-        <span>{{ 65421 | visited}}</span>
+        <span>{{ data.stargazers | visited}}</span>
       </li>
     </ul>
 
     <!-- 用户作品 -->
     <ul class="photographer__panos">
-      <li>
+      <li v-for="(pano,index) in panos" :key="index">
         <div>
-          <a href="#"
-            :style="{backgroundImage:`url(${require('@/assets/default.jpg')})`}"
-            title="图片说明"
+          <a
+            :href="`${hostName}/pano/view/${pano.hash_pano_id}`"
+            :style="{backgroundImage:`url(${imgFormat(pano.thumb)})`}"
+            :title="pano.name"
           ></a>
         </div>
       </li>
-      <li>
+      <!-- 缺省图片 -->
+      <li v-for="index in (2 - panos.length)" :key="index">
         <div>
-          <a href="#"
-            :style="{backgroundImage:`url(${require('@/assets/default.jpg')})`}"
+          <a
+            :style="{backgroundImage:`url(${imgFormat('')})`}"
             title="图片说明"
           ></a>
         </div>
@@ -63,15 +68,58 @@
 </template>
 
 <script>
+
+import defaultImg from '@/assets/default.jpg'
+
 export default {
   name: 'Photographer',
 
+  props: {
+    data: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+
+    }
+  },
+
+  computed: {
+    panos() {
+      return this.data.panorama
+    },
+
+    imgHead() {
+      return process.env.NODE_ENV === 'production' ?
+      'https://www-statics.gy720.com/' : 'https://l-statics.gy720.com/'
+    },
+
+    hostName() {
+      return process.env.NODE_ENV === 'production' ?
+      'https://l.gy720.com/' : 'https://www.gy720.com/'
+    },
+  },
+
   filters: {
+    // 点赞或者浏览数破万时转换单位
     visited(value) {
       if (value >= 10000) {
         return `${(value / 10000).toFixed(2)}万`
       }
       return value
+    },
+  },
+
+  methods: {
+    // 如果作品或者头像为空的时候，显示默认图片
+    imgFormat(value) {
+      if (value === '') {
+        return defaultImg
+      }
+      return `${this.imgHead}${value}`
     },
   },
 }
@@ -96,11 +144,10 @@ export default {
 
   &__label {
     position: absolute;
-    padding: 0 14px;
+    padding: 8px 16px;
     right: 0;
     top: 0;
-    font-size: 24px;
-    line-height: 44px;
+    font-size: 28px;
     color: #fff;
     background-color: var(--label-color);
   }
@@ -162,7 +209,7 @@ export default {
 
   &__panos {
     list-style: none;
-    padding: 0 0 50px 0;
+    padding: 0 0 40px 0;
     margin: 0;
     display: flex;
 
