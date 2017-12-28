@@ -22,7 +22,6 @@
       </li>
     </ul>
 
-    <AppNavi />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    我的作品
+    发布全景
   </div>
 </template>
 

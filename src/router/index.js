@@ -22,6 +22,7 @@ const router = new Router({
       component: views.Login,
       meta: {
         title: '账号登录',
+        hideNav: true,
       },
     },
     {
@@ -41,23 +42,42 @@ const router = new Router({
       },
     },
     {
-      path: '/mypanos',
-      name: 'MyPanos',
-      component: views.MyPanos,
+      path: '/author/:id',
+      name: 'AuthorPanos',
+      component: views.AuthorPanos,
       meta: {
-        title: '我的作品',
-        needToken: true,
+        title: '作品列表',
       },
     },
     {
-      path: '/publish',
-      name: 'Publish',
-      component: views.Publish,
+      path: '/user',
+      name: 'User',
+      component: views.User,
       meta: {
-        title: '发布全景',
         needToken: true,
       },
+      children: [
+        {
+          path: '/user/publish',
+          name: 'UserPublish',
+          component: views.UserPublish,
+          meta: {
+            title: '发布全景',
+            needToken: true,
+          },
+        },
+        {
+          path: '/user/mypanos',
+          name: 'UserMyPanos',
+          component: views.AuthorPanos,
+          meta: {
+            title: '我的作品',
+            needToken: true,
+          },
+        },
+      ],
     },
+
   ],
 })
 
@@ -69,11 +89,11 @@ router.beforeEach((to, from, next) => {
    */
   if (to.meta.needToken) {
     // if (这里写已登录的判断条件) {
-    //   next();
+    //   next()
     // } else {
     //   next({
     //     path: '/login',
-    //   });
+    //   })
     // }
     next()
   }
