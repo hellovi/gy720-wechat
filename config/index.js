@@ -16,7 +16,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/user/': proxySetting
+      '/user/': proxySetting,
+      '/wechatapi/': proxySetting
     },
 
     // Various Dev Server settings
