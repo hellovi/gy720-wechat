@@ -56,7 +56,7 @@ const router = new Router({
       name: 'User',
       component: views.User,
       meta: {
-        needToken: true,
+        title: '用户中心',
       },
       children: [
         {
@@ -65,7 +65,6 @@ const router = new Router({
           component: views.UserPublish,
           meta: {
             title: '发布全景',
-            needToken: true,
           },
         },
         {
@@ -74,7 +73,6 @@ const router = new Router({
           component: views.AuthorPanos,
           meta: {
             title: '我的作品',
-            needToken: true,
           },
         },
       ],
@@ -84,22 +82,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  /**
-   * 不是所有页面都需要鉴权
-   * 需要鉴权的页面，我都会在路由 meta 添加添加一个字段 needToken
-   * needToken 设置为 true 的时候，必须要已登录才能进入
-   */
-  if (to.meta.needToken) {
-    // if (这里写已登录的判断条件) {
-    //   next()
-    // } else {
-    //   next({
-    //     path: '/login',
-    //   })
-    // }
-    next()
-  }
-
   // 更换页面title
   const defaultTitle = '光鱼全景'
   if (to.meta.title) {
