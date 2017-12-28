@@ -13,30 +13,31 @@
     <div class="photographer__avatar">
       <router-link
         :to="`/author/${data.hash_user_id}`"
-        :style="{backgroundImage:`url(${imgFormat(data.avatar)})`}"
         :title="`${data.nickname}`"
-      ></router-link>
+      >
+        <img v-qiniu-src="data.avatar" :alt="`${data.nickname}`">
+      </router-link>
     </div>
 
     <!-- 用户名 -->
     <div class="photographer__name">{{data.nickname}}</div>
 
     <!-- 用户信息 -->
-    <ul class="photographer__meta">
+    <ul class="list photographer__meta">
       <li>
-        <svg fill="#C2C2C2" class="photographer__meta__icon">
+        <svg class="photographer__meta__icon">
           <use href="#photo"/>
         </svg>
         <span>{{ data.panoramas }}</span>
       </li>
       <li>
-        <svg fill="#C2C2C2" class="photographer__meta__icon">
+        <svg class="photographer__meta__icon">
           <use href="#eye"/>
         </svg>
         <span>{{ data.popular | visited}}</span>
       </li>
       <li>
-        <svg fill="#C2C2C2" class="photographer__meta__icon">
+        <svg class="photographer__meta__icon">
           <use href="#like"/>
         </svg>
         <span>{{ data.stargazers | visited}}</span>
@@ -44,23 +45,25 @@
     </ul>
 
     <!-- 用户作品 -->
-    <ul class="photographer__panos">
+    <ul class="list photographer__panos">
       <li v-for="(pano,index) in panos" :key="index">
         <div>
           <a
-            :href="`${hostName}/pano/view/${pano.hash_pano_id}`"
-            :style="{backgroundImage:`url(${imgFormat(pano.thumb)})`}"
+            :href="`/pano/view/${pano.hash_pano_id}`"
             :title="pano.name"
-          ></a>
+          >
+            <img v-qiniu-src="pano.thumb" :alt="pano.name">
+          </a>
         </div>
       </li>
       <!-- 缺省图片 -->
       <li v-for="index in (2 - panos.length)" :key="index">
         <div>
           <a
-            :style="{backgroundImage:`url(${imgFormat('')})`}"
-            title="图片说明"
-          ></a>
+            title="暂无更多作品"
+          >
+            <img v-qiniu-src="''" alt="暂无更多作品">
+          </a>
         </div>
       </li>
     </ul>
@@ -68,8 +71,6 @@
 </template>
 
 <script>
-
-import defaultImg from '@/assets/default.jpg'
 
 export default {
   name: 'Photographer',
@@ -91,16 +92,6 @@ export default {
     panos() {
       return this.data.panorama
     },
-
-    imgHead() {
-      return process.env.NODE_ENV === 'production' ?
-      'https://www-statics.gy720.com/' : 'https://l-statics.gy720.com/'
-    },
-
-    hostName() {
-      return process.env.NODE_ENV === 'production' ?
-      'https://l.gy720.com/' : 'https://www.gy720.com/'
-    },
   },
 
   filters: {
@@ -114,13 +105,7 @@ export default {
   },
 
   methods: {
-    // 如果作品或者头像为空的时候，显示默认图片
-    imgFormat(value) {
-      if (value === '') {
-        return defaultImg
-      }
-      return `${this.imgHead}${value}`
-    },
+
   },
 }
 </script>
@@ -130,7 +115,7 @@ export default {
 :root {
   --avatar-width: 356px;
   --border-color: #BFBFBF;
-  --icon-width:30px;
+  --icon-width: 30px;
   --icon-color: #C2C2C2;
   --text-color: #504F4F;
   --label-color: #FF8A00;
@@ -163,13 +148,12 @@ export default {
 
     & > a {
       display: block;
-      height: 100%;
-      width: 100%;
-      border-radius: 50%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center center;
-      background-color: #eeeeee;
+
+      & > img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
     }
 
   }
@@ -185,9 +169,7 @@ export default {
   }
 
   &__meta {
-    list-style: none;
     margin: 30px 0;
-    padding: 0;
     display: flex;
 
     &>li {
@@ -204,13 +186,12 @@ export default {
       margin-right: 14px;
       width: var(--icon-width);
       height: var(--icon-width);
+      fill: var(--icon-color);
     }
   }
 
   &__panos {
-    list-style: none;
     padding: 0 0 40px 0;
-    margin: 0;
     display: flex;
 
     & li {
@@ -230,10 +211,11 @@ export default {
           display: block;
           height: 100%;
           width: 100%;
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center center;
-          background-color: #eeeeee;
+
+          & > img {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
