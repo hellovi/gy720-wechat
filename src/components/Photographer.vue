@@ -12,7 +12,7 @@
     <!-- 头像 -->
     <div class="photographer__avatar">
       <router-link
-        :to="`/author/${data.hash_user_id}`"
+        :to="goTo(data.hash_user_id,data.nickname,data.panoramas,data.popular,data.stargazers,data.avatar)"
         :title="`${data.nickname}`"
       >
         <img v-qiniu-src="data.avatar" :alt="`${data.nickname}`">
@@ -34,13 +34,13 @@
         <svg class="photographer__meta__icon">
           <use href="#eye"/>
         </svg>
-        <span>{{ data.popular | visited}}</span>
+        <span>{{ data.popular | visited }}</span>
       </li>
       <li>
         <svg class="photographer__meta__icon">
           <use href="#like"/>
         </svg>
-        <span>{{ data.stargazers | visited}}</span>
+        <span>{{ data.stargazers | visited }}</span>
       </li>
     </ul>
 
@@ -105,7 +105,10 @@ export default {
   },
 
   methods: {
-
+    // 摄影师主页跳转地址路由拼接
+    goTo(hash_user_id, nickname, panoramas, popular, stargazers, avatar) {
+      return `/author/${hash_user_id}?nickname=${nickname}&panoramas=${panoramas}&popular=${popular}&stargazers=${stargazers}&avatar=${avatar}`
+    },
   },
 }
 </script>
