@@ -6,14 +6,21 @@
         @click="swtichVisible"
         v-clickoutside="closeVisible"
       >
-        <span>标签</span>
+        <span>{{ leftName }}</span>
         <ul v-show="visible" class="filter__list" @click.stop>
-          <li class="filter__item" v-for="i in 18" :key="i">全部</li>
+          <li
+            class="filter__item"
+            v-for="list in leftTagData"
+            :class="{active: checkedTag.id === list.id}"
+            :key="list.id"
+            @click="checkHandle(list)"
+          >{{ list.name }}</li>
         </ul>
       </div>
-      <button class="filter-bar__left-hand" :class="{active: isHandpick}">精选</button>
+      <!-- 当前选中 -->
+      <button class="filter-bar__left-checked" v-if="checkedTag">{{ checkedTag.name }}</button>
     </div>
-    <div
+    <!-- <div
       class="filter"
       @click="swtichSort"
       v-clickoutside="closeSort"
@@ -26,13 +33,13 @@
       >
         <li
           class="filter-sort__item"
-          v-for="i in 3"
-          :key="i"
+          v-for="(item, index) in rightTagData"
+          :key="index"
         >
           <a href="">全部</a>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -40,12 +47,30 @@
 export default {
   name: 'FilterBar',
 
+  props: {
+    leftName: {
+      type: String,
+      default: '作品标签',
+    },
+
+    leftTagData: {
+      type: Array,
+      default: () => ([]),
+    },
+  },
+
   data() {
     return {
       visible: false,
       filterSort: false,
-      isHandpick: false,
     }
+  },
+
+  computed: {
+    checkedTag() {
+      const tagId = this.$route.query && +this.$route.query.tag_id
+      return tagId ? this.leftTagData.find(item => item.id === tagId) : { name: '全部' }
+    },
   },
 
   methods: {
@@ -64,11 +89,18 @@ export default {
     closeSort() {
       this.filterSort = false
     },
+
+    checkHandle(item) {
+      this.visible = false
+      this.$emit('tag-update', item)
+    },
   },
 }
 </script>
 
 <style lang="postcss">
+@import 'vars.css';
+
 .filter-bar {
   position: relative;
   display: flex;
@@ -85,7 +117,7 @@ export default {
     display: flex;
     justify-content: flex-start;
 
-    &-hand {
+    &-checked {
       margin-left: 10px;
       border: 0;
       background: transparent;
@@ -114,7 +146,7 @@ export default {
   left: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   width: 468px;
   padding: 20px;
   border: 1px solid #ccc;
@@ -136,6 +168,12 @@ export default {
   color: #333;
   text-align: center;
   cursor: pointer;
+
+  &.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+  }
 }
 
 .filter-sort {

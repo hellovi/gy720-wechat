@@ -1,33 +1,138 @@
 <template>
   <div>
-    <FilterBar/>
-
-    <ul class="panos">
-      <li
-        class="pano"
-        v-for="i in 10"
-        :key="i"
-      >
-        <div class="pano__image">
-          <img src="https://www-statics.gy720.com/data/pano/l4nevvxqexzd/m8rkznzrkdvo/5918503ecdf9d.jpg" alt="">
-        </div>
-        <div class="pano__info">
-          <img
-            class="pano__avatar"
-            src="https://www-statics.gy720.com/data/avatar/201710/591e65d91ffcb.jpg?imageMogr2/crop/!800x800a0a0"
-            alt=""
-          >
-          <span>房子客厅大门</span>
-        </div>
-      </li>
-    </ul>
-
+    <scroller
+      :on-refresh="refresh"
+      :on-infinite="infinite"
+      ref="panosList"
+    >
+      <FilterBar :left-tag-data="filterTag" @tag-update="tagUpdate"/>
+      <ul class="panos">
+        <li
+          class="pano"
+          v-for="(list, index) in panoramas"
+          :key="index"
+        >
+          <a :href="`/pano/view/${list.hash_pano_id}`">
+            <div class="pano__image">
+              <img v-qiniu-src="list.thumb" :alt="list.name">
+            </div>
+            <div class="pano__info">
+              <img
+                class="pano__avatar"
+                v-qiniu-src="list.avatar"
+                :alt="list.nickname"
+              >
+              <span class="ellipsis">{{list.name}}</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </scroller>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Panos',
+
+  data() {
+    return {
+      filterTag: [],
+      panoramas: [],
+      page: 0,
+      lastPage: 1,
+    }
+  },
+
+  methods: {
+    // 获取作品标签数据
+    getTagData() {
+      this.$http.get('/wechatapi/tags')
+      .then((res) => {
+        this.filterTag = [...res.result.tags]
+      })
+    },
+
+    // 选中标签更新路由
+    tagUpdate(item) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          tag_id: item.id,
+          per_page: 10,
+        },
+      })
+    },
+
+    /**
+     * @param {Number} page 页码
+     * @param {Boolean} status 是否上拉加载
+     * @param {Function} callback 上拉加载回调
+    */
+    getPageData(page = 1, status = false, callback) {
+      this.page = +page
+      const query = {
+        ...this.$route.query,
+      }
+      return this.getPanoData(this.parse(query), status, callback)
+    },
+
+    // 转换数据格式
+    parse(query) {
+      return Object.keys(query)
+        .reduce((result, key) => {
+          const value = query[key]
+          return `${result}&${key}=${value}`
+        }, '')
+    },
+
+    // 获取列表数据
+    getPanoData(qs, status = false, callback) {
+      return this.$http.get(`/wechatapi/pano?page=${this.page}&${qs}`)
+        .then(({ result }) => {
+          this.lastPage = result.panoramas.last_page
+          if (result.panoramas && result.panoramas.data.length > 0) {
+            if (status) {
+              this.panoramas = [...this.panoramas, ...result.panoramas.data]
+            } else {
+              this.panoramas = [...result.panoramas.data]
+            }
+          }
+          if (callback) callback()
+          return result
+        })
+        .catch(() => {
+          if (callback) callback()
+        })
+    },
+
+    // 下拉刷新
+    async refresh(done) {
+      await this.getPageData()
+      done()
+    },
+
+    // 上拉加载
+    infinite(done) {
+      if (this.lastPage !== this.page) {
+        this.getPageData(this.page += 1, true, done)
+      } else {
+        done(true)
+      }
+    },
+
+  },
+
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.getTagData()
+    })
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    this.getPanoData(this.parse(to.query))
+    next()
+  },
 }
 </script>
 
@@ -64,18 +169,16 @@ export default {
   & .pano__info {
     display: flex;
     align-items: center;
-    height: calc(50 / 750 * 100vw);
-    min-height: 30px;
-    max-height: 50px;
+    height: 50px;
     background-color: #fff;
     font-size: 24px;
   }
 
   & .pano__avatar {
-    width: calc(54 / 345 * 100%);
-    min-width: 35px;
-    margin-left: calc(8 / 345 * 100%);
-    margin-right: calc(14 / 345 * 100%);
+    width: 55px;
+    height: 55px;
+    margin-left: 8px;
+    margin-right: 14px;
     border-radius: 50%;
     transform: translateY(-22%);
   }

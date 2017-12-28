@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueScroller from 'vue-scroller'
 import App from './App'
 import router from './router'
 import * as components from './components'
@@ -21,6 +22,7 @@ Object.keys(directives).forEach((key) => {
 Vue
   .use(Http)
   .use(Url)
+  .use(VueScroller)
 
 /* eslint-disable no-new */
 new Vue({
