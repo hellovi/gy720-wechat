@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <router-view/>
+    <!-- 底部导航 -->
+    <AppNavi />
   </div>
 </template>
 

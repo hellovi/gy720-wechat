@@ -1,5 +1,6 @@
 <template>
   <div
+    v-show="!hideNav"
     class="app-menu"
     :class="{open}"
   >
@@ -39,22 +40,38 @@ export default {
       items: [
         {
           name: '看全景',
-          to: '/',
+          to: '/panos',
           icon: 'eye-outline',
         },
         {
           name: '发布',
-          to: '/',
+          to: '/user/publish',
           icon: 'publish',
         },
         {
           name: '我的',
-          to: '/',
+          to: '/user/mypanos',
           icon: 'user',
         },
       ],
       open: false,
     }
+  },
+
+  computed: {
+    currentRouter() {
+      return this.$route.path
+    },
+
+    hideNav() {
+      return this.$route.meta.hideNav
+    },
+  },
+
+  watch: {
+    currentRouter() {
+      this.open = false
+    },
   },
 
   methods: {
