@@ -1,7 +1,6 @@
 <template>
   <div>
-    用户中心
-    <router-view />
+    <router-view :user-info="userInfo" />
   </div>
 </template>
 
@@ -9,19 +8,21 @@
 import { Http } from '@/utils'
 
 export default {
+  name: 'User',
 
   data() {
     return {
-      userInfo: null,
+      // 用户信息
+      userInfo: {},
     }
   },
 
   beforeRouteEnter(to, from, next) {
     Http.get('/wechatapi/achieve')
-      .then((res) => {
+      .then(({ result: { achieve, profile } }) => {
         next((vm) => {
           /* eslint-disable no-param-reassign */
-          vm.userInfo = res
+          vm.userInfo = { ...achieve, ...profile }
         })
       })
   },
