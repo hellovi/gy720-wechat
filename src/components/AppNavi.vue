@@ -5,7 +5,7 @@
     :class="{open}"
   >
     <nav class="app-menu__nav">
-      <ul>
+      <ul class="list">
         <li
           v-for="item in items"
           :key="item.name"
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'AppNavi',
 
@@ -54,27 +55,33 @@ export default {
           icon: 'user',
         },
       ],
+
       open: false,
+      show: true,
     }
   },
 
   computed: {
+    // 返回当前path
     currentRouter() {
       return this.$route.path
     },
 
+    // 判断当前路由是否设置了该路由不显示该组件
     hideNav() {
       return this.$route.meta.hideNav
     },
   },
 
   watch: {
+    // 路由变化的时候重置导航栏
     currentRouter() {
       this.open = false
     },
   },
 
   methods: {
+    // 展开/收回导航栏
     switchNav() {
       this.open = !this.open
     },
@@ -83,6 +90,8 @@ export default {
 </script>
 
 <style lang="postcss">
+@import 'vars.css';
+
 :root {
   --nav-size: 350px;
   --circle-size: 68px;
@@ -122,7 +131,7 @@ export default {
     width: 100%;
     height: 100%;
     zoom: 0.75;
-    fill: #439ffa;
+    fill: var(--primary-color);
   }
 }
 
@@ -133,12 +142,6 @@ export default {
   background-color: rgba(0, 0, 0, 0.6);
   transform: rotate(315deg) scale(0);
   transition: inherit;
-
-  & ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
 }
 
 .app-menu__item {
