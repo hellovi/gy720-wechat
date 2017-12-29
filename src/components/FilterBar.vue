@@ -18,7 +18,7 @@
         </ul>
       </div>
       <!-- 当前选中 -->
-      <button class="filter-bar__left-checked" v-if="checkedTag">{{ checkedTag.name }}</button>
+      <span class="filter-bar__left-checked" v-if="checkedTag">{{ checkedTag.name }}</span>
     </div>
     <!-- <div
       class="filter"
@@ -57,6 +57,11 @@ export default {
       type: Array,
       default: () => ([]),
     },
+
+    tagField: {
+      type: String,
+      default: 'tag_id',
+    },
   },
 
   data() {
@@ -68,8 +73,8 @@ export default {
 
   computed: {
     checkedTag() {
-      const tagId = this.$route.query && +this.$route.query.tag_id
-      return tagId ? this.leftTagData.find(item => item.id === tagId) : { name: '全部' }
+      const tagFieldId = this.$route.query && +this.$route.query[this.tagField]
+      return tagFieldId ? this.leftTagData.find(item => item.id === tagFieldId) : { name: '全部' }
     },
   },
 
@@ -105,21 +110,20 @@ export default {
   position: relative;
   display: flex;
   justify-content: space-between;
-  height: 60px;
-  min-height: 40px;
-  max-height: 60px;
+  height: 100px;
   padding: 0 calc(16 / 710 * 100%);
-  margin: 20px;
+  border: 20px solid #ebebeb;
   background-color: #fff;
   font-size: 28px;
+  z-index: 10;
 
   &__left {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
 
     &-checked {
       margin-left: 10px;
-      border: 0;
       background: transparent;
       color: #8b8b8b;
     }

@@ -1,11 +1,12 @@
 <template>
   <div>
+    <FilterBar class="panos-filter" :left-tag-data="filterTag" @tag-update="tagUpdate"/>
     <scroller
       :on-refresh="refresh"
       :on-infinite="infinite"
-      ref="panosList"
+      ref="scrollerList"
+      class="list-scroller"
     >
-      <FilterBar :left-tag-data="filterTag" @tag-update="tagUpdate"/>
       <ul class="panos">
         <li
           class="pano"
@@ -32,8 +33,12 @@
 </template>
 
 <script>
+import { scroller } from '@/mixins'
+
 export default {
   name: 'Panos',
+
+  mixins: [scroller],
 
   data() {
     return {
@@ -53,90 +58,26 @@ export default {
       })
     },
 
-    // 选中标签更新路由
-    tagUpdate(item) {
-      this.$router.push({
-        query: {
-          ...this.$route.query,
-          tag_id: item.id,
-          per_page: 10,
-        },
-      })
-    },
-
-    /**
-     * @param {Number} page 页码
-     * @param {Boolean} status 是否上拉加载
-     * @param {Function} callback 上拉加载回调
-    */
-    getPageData(page = 1, status = false, callback) {
-      this.page = +page
-      const query = {
-        ...this.$route.query,
-      }
-      return this.getPanoData(this.parse(query), status, callback)
-    },
-
-    // 转换数据格式
-    parse(query) {
-      return Object.keys(query)
-        .reduce((result, key) => {
-          const value = query[key]
-          return `${result}&${key}=${value}`
-        }, '')
-    },
-
     // 获取列表数据
-    getPanoData(qs, status = false, callback) {
-      return this.$http.get(`/wechatapi/pano?page=${this.page}&${qs}`)
-        .then(({ result }) => {
-          this.lastPage = result.panoramas.last_page
-          if (result.panoramas && result.panoramas.data.length > 0) {
-            if (status) {
-              this.panoramas = [...this.panoramas, ...result.panoramas.data]
-            } else {
-              this.panoramas = [...result.panoramas.data]
-            }
+    getListData(qs, status = false) {
+      return this.$http.get(`/wechatapi/pano?page=${this.page}${qs}`)
+        .then(({ result: { panoramas } }) => {
+          this.lastPage = panoramas.last_page
+          if (panoramas && panoramas.data.length > 0) {
+            this.panoramas = status ? [...this.panoramas, ...panoramas.data] : [...panoramas.data]
           }
-          if (callback) callback()
-          return result
-        })
-        .catch(() => {
-          if (callback) callback()
+          return panoramas
         })
     },
 
-    // 下拉刷新
-    async refresh(done) {
-      await this.getPageData()
-      done()
-    },
-
-    // 上拉加载
-    infinite(done) {
-      if (this.lastPage !== this.page) {
-        this.getPageData(this.page += 1, true, done)
-      } else {
-        done(true)
-      }
-    },
-
   },
 
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      vm.getTagData()
-    })
-  },
-
-  beforeRouteUpdate(to, from, next) {
-    this.getPanoData(this.parse(to.query))
-    next()
-  },
 }
 </script>
 
 <style lang="postcss">
+@import 'scroller.css';
+
 .panos {
   list-style: none;
   display: flex;
