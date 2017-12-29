@@ -103,6 +103,7 @@ export default {
 
     // 删除作品
     remove(id) {
+      // eslint-disable-next-line
       console.log(id)
     },
 
