@@ -48,13 +48,9 @@
           </svg>
         </div>
       </li>
-
-      <!-- 缺省信息 -->
-      <divider
-        v-if="list.length === 0"
-        content="暂时没有作品"
-      ></divider>
     </ul>
+
+    <no-data />
 
   </div>
 </template>

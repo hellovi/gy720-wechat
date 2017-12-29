@@ -23,6 +23,7 @@
 
     <svg fill="#C2C2C2"><use href="#photo"/></svg>
 
+    <svg fill="#C2C2C2"><use href="#nodata"/></svg>
   </div>
 </template>
 
