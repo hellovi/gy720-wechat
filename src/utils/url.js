@@ -69,6 +69,8 @@ export default class Url {
   static static(pathname) {
     if (Regex.url(pathname) || Regex.base64(pathname)) {
       return pathname
+    } else if (pathname.includes('/assets/')) {
+      return `${window.location.origin}${pathname}`
     }
     return /^\/.*$/.test(`${pathname}`) ? `${configHost.cdn}${pathname}` : `${configHost.cdn}/${pathname}`
   }

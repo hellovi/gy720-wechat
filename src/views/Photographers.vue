@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import { scroller } from '@/mixins'
+import { scroller, weixinsdk } from '@/mixins'
 
 export default {
   name: 'Photographers',
 
-  mixins: [scroller],
+  mixins: [scroller, weixinsdk],
 
   data() {
     return {

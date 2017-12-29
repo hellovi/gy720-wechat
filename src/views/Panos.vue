@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import { scroller } from '@/mixins'
+import { scroller, weixinsdk } from '@/mixins'
 
 export default {
   name: 'Panos',
 
-  mixins: [scroller],
+  mixins: [scroller, weixinsdk],
 
   data() {
     return {
@@ -69,7 +69,6 @@ export default {
           return panoramas
         })
     },
-
   },
 
 }
