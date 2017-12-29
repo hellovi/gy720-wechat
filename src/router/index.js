@@ -48,7 +48,7 @@ const router = new Router({
       name: 'AuthorPanos',
       component: views.AuthorPanos,
       meta: {
-        title: '作品列表',
+        title: '摄影师作品',
       },
     },
     {

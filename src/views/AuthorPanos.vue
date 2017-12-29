@@ -1,20 +1,19 @@
 <template>
   <div class="author">
-
     <div class="author__header">
       <!-- 头像 -->
       <img
-        v-qiniu-src="avatar"
+        v-qiniu-src="format('avatar')"
         class="author__header__avatar"
-        :alt="nickname"
+        :alt="format('nickname')"
       >
       <!-- 用户信息 -->
       <div class="author__header__meta">
-        <div>{{nickname}}</div>
+        <div>{{ format('nickname') }}</div>
         <ul class="list">
-          <li>作品：{{ panoramas }}</li>
-          <li>人气：{{ popular | visited }}</li>
-          <li>赞：{{ stargazers | visited }}</li>
+          <li>作品：{{ format('panoramas') }}</li>
+          <li>人气：{{ format('popular') | visited }}</li>
+          <li>赞：{{ format('stargazers') | visited }}</li>
         </ul>
       </div>
       <!-- 发布作品 -->
@@ -27,14 +26,34 @@
 
     <!-- 作品列表 -->
     <ul class="list author__list">
-      <li v-for="(item,index) in 3" :key="item">
+      <li v-for="(item,index) in list" :key="index">
+        <!-- 封面 -->
         <a
-          :href="`/pano/view/${index}`"
-          class="author__list__img"
+          :href="`/pano/view/${item.hash_pano_id}`"
+          class="author__list__link"
+          :title="item.name"
         >
-          <img v-qiniu-src="''" alt="">
+          <img v-qiniu-src="item.thumb" :alt="item.name">
         </a>
+        <!-- 作品信息 -->
+        <div class="author__list__meta">
+          <p>{{item.name}}</p>
+          <!-- 删除作品 -->
+          <svg
+            v-if="isMyPanos"
+            class="author__list__svg"
+            @click="remove(item.id)"
+          >
+            <use href="#trash"/>
+          </svg>
+        </div>
       </li>
+
+      <!-- 缺省信息 -->
+      <divider
+        v-if="list.length === 0"
+        content="暂时没有作品"
+      ></divider>
     </ul>
 
   </div>
@@ -50,6 +69,12 @@ export default {
     },
   },
 
+  data() {
+    return {
+      list: [],
+    }
+  },
+
   computed: {
     isMyPanos() { // 是否是 “我的作品” 路由
       return this.$route.path === '/user/mypanos'
@@ -57,26 +82,6 @@ export default {
 
     id() { // 摄影师 hash_user_id
       return this.$route.params.id || null
-    },
-
-    avatar() { // 头像链接
-      return this.isMyPanos ? this.userInfo.avatar : this.$route.query.avatar
-    },
-
-    nickname() { // 用户名
-      return this.isMyPanos ? this.userInfo.nickname : this.$route.query.nickname
-    },
-
-    popular() { // 人气
-      return this.isMyPanos ? this.userInfo.popular : this.$route.query.popular
-    },
-
-    stargazers() { // 点赞
-      return this.isMyPanos ? this.userInfo.stargazers : this.$route.query.stargazers
-    },
-
-    panoramas() { // 作品数
-      return this.isMyPanos ? this.userInfo.panoramas : this.$route.query.panoramas
     },
   },
 
@@ -88,6 +93,53 @@ export default {
       }
       return value
     },
+  },
+
+  methods: {
+    // 根据是他人作品还是我的作品获取不同数据
+    format(item) {
+      return this.isMyPanos ? this.userInfo[item] : this.$route.query[item]
+    },
+
+    // 删除作品
+    remove(id) {
+      console.log(id)
+    },
+
+    // 我的作品
+    getMyPanos(page) {
+      this.$http.get(`/wechatapi/userpano?page=${page}`)
+        .then(({ result: { panoramas } }) => {
+          this.list = [...this.list, ...panoramas.data]
+        })
+    },
+
+    // 摄影师作品
+    getAuthorPanos(page) {
+      this.$http.get(`/wechatapi/authorpano/${this.id}?page=${page}`)
+        .then(({ result: { panoramas } }) => {
+          this.list = [...this.list, ...panoramas.data]
+        })
+    },
+  },
+
+  beforeRouteEnter(to, from, next) {
+    // 如果是他人作品页面，就加上作者名称
+    if (to.path !== '/user/mypanos') {
+      const authorName = to.query.nickname
+      if (authorName) {
+        document.title = `${authorName} - 光鱼全景`
+      }
+    }
+    next()
+  },
+
+  created() {
+    if (this.isMyPanos) {
+      this.getMyPanos(1)
+    } else {
+      this.getAuthorPanos(1)
+    }
   },
 
 }
@@ -103,6 +155,8 @@ export default {
   --btn-height: 60px;
   --text-color: #504F4F;
   --info-color: #999;
+  --icon-color:#666;
+  --meta-height:60px;
 }
 
 .author {
@@ -115,7 +169,7 @@ export default {
       background-color: #fff;
     }
 
-    &__img {
+    &__link {
       display: block;
       position: relative;
       width: 100%;
@@ -127,6 +181,32 @@ export default {
         height: 100%;
       }
     }
+
+    &__meta {
+      height: var(--meta-height);
+      line-height: var(--meta-height);
+      padding: 0 20px;
+      display: flex;
+      font-size: 28px;
+      justify-content: space-between;
+      align-items: center;
+
+      & > p {
+        margin: 0;
+        padding: 0;
+        // flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    &__svg {
+      fill:var(--icon-color);
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
   }
 
   &__header{
@@ -136,7 +216,7 @@ export default {
     height: var(--header-height);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
 
     &__avatar {
       width: var(--avatar-width);
