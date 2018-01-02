@@ -4,4 +4,4 @@ export { default as Photographers } from './Photographers'
 export { default as AuthorPanos } from './AuthorPanos'
 
 export { default as User } from './User'
-export { default as UserPublish } from './Publish'
+export { default as UserPublish } from './User/Publish'
