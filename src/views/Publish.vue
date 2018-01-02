@@ -4,16 +4,19 @@
       <!-- 图片列表 -->
       <ul class="publish__list list">
         <li v-for="item in 1" :key="item">
+          <!-- 进度条 -->
+          <Progress :percent="75"></Progress>
+          <!-- 图片预览 -->
           <img v-qiniu-src="''" alt="">
           <div class="publish__list__meta">夕阳西下图</div>
         </li>
       </ul>
 
-      <!-- 上传按钮 -->
+      <!-- 上传区域 -->
       <label class="publish__upload">
         <svg><use href="#plus"/></svg>
         <p>请上传2:1全景图</p>
-        <p>目前支持TPG、JPEG格式</p>
+        <p>目前支持 JPG、JPEG格式</p>
         <input type="file" hidden>
       </label>
 
@@ -69,24 +72,28 @@ export default {
   &__list {
 
     & > li {
+      position: relative;
       width: 100%;
       height: calc((100vw - 40px) / 2);
-      position: relative;
       margin-bottom: 20px;
+      background-color:rgb(251,251,251);
+      text-align:center;
+      overflow: hidden;
 
       & > img {
-        width: 100%;
+        // width: 100%;
         height: 100%;
       }
     }
 
     &__meta {
       position: absolute;
+      bottom: 0;
       height: 40px;
-      line-height: 40px;
       width: 100%;
       padding: 0 10px;
-      bottom: 0;
+      text-align:left;
+      line-height: 40px;
       background-color: rgba(0, 0, 0, 0.5);
       color:#fff;
       font-size: 24px;
@@ -156,7 +163,7 @@ export default {
         color: inherit;
 
         &::placeholder {
-          color:#959595;
+          color:var(--upload-color);
         }
       }
     }

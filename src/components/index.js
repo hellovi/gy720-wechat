@@ -5,3 +5,5 @@ export { default as Photographer } from './Photographer'
 export { default as Toast } from './Toast'
 export { default as Divider } from './Divider'
 export { default as NoData } from './NoData'
+export { default as Progress } from './Progress'
+
