@@ -1,5 +1,5 @@
 <template>
-  <div class="nodata">
+  <div class="nodata" :style="{marginTop:`${top}px`}">
     <svg class="nodata__svg"><use href="#nodata"/></svg>
     <div class="nodata__content">{{ content }}</div>
   </div>
@@ -19,6 +19,10 @@ export default {
     content: {
       type: String,
       default: '暂无数据 ...',
+    },
+    top: {
+      type: Number,
+      default: 200,
     },
   },
 }
