@@ -3,22 +3,21 @@
     <form>
       <!-- 图片列表 -->
       <ul class="publish__list list">
-        <li v-for="item in 1" :key="item">
-          <!-- 进度条 -->
-          <Progress :percent="75"></Progress>
+        <li v-for="scene in scenes" :key="scene.upload_id">
           <!-- 图片预览 -->
-          <img v-qiniu-src="''" alt="">
-          <div class="publish__list__meta">夕阳西下图</div>
+          <img :src="scene.preview" :alt="scene.name">
+          <!-- 遮罩组件 -->
+          <app-mask :scene="scene"></app-mask>
+          <!-- 作品信息 -->
+          <div class="publish__list__meta">{{ scene.name }}</div>
         </li>
       </ul>
 
-      <!-- 上传区域 -->
-      <label class="publish__upload">
-        <svg><use href="#plus"/></svg>
-        <p>请上传2:1全景图</p>
-        <p>目前支持 JPG、JPEG格式</p>
-        <input type="file" hidden>
-      </label>
+      <!-- 上传组件 -->
+      <Upload
+        @add-scene="addScene"
+        @update-scene="updateScene"
+      ></Upload>
 
       <!-- 作品名称 -->
       <div class="publish__cell">
@@ -51,7 +50,23 @@ export default {
       form: {
         name: '',
       },
+
+      scenes: [],
     }
+  },
+
+  methods: {
+    addScene(scene) {
+      this.scenes.push(scene)
+    },
+
+    updateScene(id, data) {
+      const index = this.scenes.findIndex(({ upload_id }) => upload_id === id)
+      this.$set(this.scenes, index, {
+        ...this.scenes[index],
+        ...data,
+      })
+    },
   },
 
 }
@@ -97,32 +112,6 @@ export default {
       background-color: rgba(0, 0, 0, 0.5);
       color:#fff;
       font-size: 24px;
-    }
-  }
-
-  &__upload {
-    width: 100%;
-    height: calc((100vw - 40px) / 2);
-    background-color: #fff;
-    border:1px solid #aaa;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom:80px;
-
-    & > svg {
-      height: 64px;
-      width: 64px;
-      fill: var(--upload-color);
-      margin-bottom: 20px;
-    }
-
-    & > p {
-      margin: 0;
-      font-size: 26px;
-      color: var(--upload-color);
-      margin-top: 20px;
     }
   }
 
