@@ -88,18 +88,16 @@ export default {
 
       // console.log(xhr)
 
-      xhr.addEventListener('load', () => {
-        // console.log(res)
-      })
+      // xhr.addEventListener('load', () => {
+      // })
 
-      xhr.addEventListener('progress', (event) => {
-        // const percentComplete = event.loaded / event.total
-        console.log(event)
-      })
+      // xhr.addEventListener('progress', (event) => {
+      //   console.log(event)
+      // })
 
-      xhr.addEventListener('error', (res) => {
-        console.log(res)
-      })
+      // xhr.addEventListener('error', (res) => {
+      //   console.log(res)
+      // })
     },
   },
 
