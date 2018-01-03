@@ -5,7 +5,7 @@
       <ul class="publish__list list">
         <li v-for="scene in scenes" :key="scene.upload_id">
           <!-- 图片预览 -->
-          <img :src="scene.preview" :alt="scene.name">
+          <img :src="scene.preview">
           <!-- 遮罩组件 -->
           <img-mask :scene="scene"></img-mask>
           <!-- 作品信息 -->
@@ -51,8 +51,18 @@ export default {
         name: '',
       },
 
+      timer: null, // 存放检查切图进度的定时器
+
       scenes: [],
     }
+  },
+
+  computed: {
+    source_scene_ids() {
+      return this.scenes
+        .map(scene => !scene.ok && scene.source_scene_id)
+        .filter(source_scene_id => source_scene_id)
+    },
   },
 
   methods: {
@@ -61,12 +71,52 @@ export default {
     },
 
     updateScene(id, data) {
+      debugger
       const index = this.scenes.findIndex(({ upload_id }) => upload_id === id)
       this.$set(this.scenes, index, {
         ...this.scenes[index],
         ...data,
       })
     },
+
+    checkOk() {
+      this.timer = setInterval(() => {
+        const { source_scene_ids } = this
+        if (source_scene_ids.length) {
+          this.$http.post('/user/sourcescene/vtourprocess', { source_scene_ids })
+            .then(({ result }) => {
+              result.forEach(({ id, vtour_status, message }) => {
+                if (vtour_status === 30) {
+                  console.log('ok', id, vtour_status, message)
+                  this.updateScene(id, {
+                    reason: message,
+                    ok: true,
+                  })
+                } else {
+                  console.log('nook', id, vtour_status, message)
+                  this.updateScene(id, {
+                    reason: message,
+                  })
+                }
+
+                // this.updateScene(id, {
+                //   reason: message,
+                //   ok: vtour_status === 30,
+                // }, true)
+              })
+              // console.log(result)
+            })
+        }
+      }, 5000)
+    },
+  },
+
+  mounted() {
+    this.checkOk()
+  },
+
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
 
 }
@@ -118,6 +168,7 @@ export default {
   &__btn {
     height: var(--btn-height);
     line-height: var(--btn-height);
+    font-size: 36px;
     width: 100%;
     background-color: var(--primary-color);
     color: #fff;
