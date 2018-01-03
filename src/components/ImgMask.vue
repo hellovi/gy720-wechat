@@ -3,7 +3,6 @@
     class="mask"
     v-if="!scene.ok"
   >
-
     <!-- 进度条 -->
     <Progress
       v-if="scene.percent > 0"
@@ -11,8 +10,7 @@
     />
 
     <!-- 提示信息 -->
-    <span v-else >{{scene.message}}</span>
-
+    <span v-else >{{scene.reason}}</span>
   </div>
 </template>
 
