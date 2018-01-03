@@ -7,5 +7,6 @@ export { default as Divider } from './Divider'
 export { default as NoData } from './NoData'
 export { default as Progress } from './Progress'
 export { default as Upload } from './Upload'
-export { default as AppMask } from './AppMask'
+export { default as ImgMask } from './ImgMask'
+export { default as Confirm } from './Confirm'
 

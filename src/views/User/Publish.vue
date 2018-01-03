@@ -7,7 +7,7 @@
           <!-- 图片预览 -->
           <img :src="scene.preview" :alt="scene.name">
           <!-- 遮罩组件 -->
-          <app-mask :scene="scene"></app-mask>
+          <img-mask :scene="scene"></img-mask>
           <!-- 作品信息 -->
           <div class="publish__list__meta">{{ scene.name }}</div>
         </li>
