@@ -151,6 +151,7 @@ export default {
   border-radius: 50%;
   background-color: #fff;
   text-decoration: none;
+  font-size: 24px;
 
   & svg {
     width: 70%;
