@@ -49,6 +49,7 @@ const router = new Router({
       component: views.AuthorPanos,
       meta: {
         title: '摄影师作品',
+        noTag: true,
       },
     },
     {
@@ -73,6 +74,7 @@ const router = new Router({
           component: views.AuthorPanos,
           meta: {
             title: '我的作品',
+            noTag: true,
           },
         },
       ],

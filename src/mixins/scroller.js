@@ -88,9 +88,14 @@
    },
 
    beforeRouteEnter(to, from, next) {
-     next((vm) => {
-       vm.getTagData()
-     })
+    //  如果是不需要标签的页面，在路由的meta里面加标志
+     if (to.meta.noTag) {
+       next()
+     } else {
+       next((vm) => {
+         vm.getTagData()
+       })
+     }
    },
 
    beforeRouteUpdate(to, from, next) {

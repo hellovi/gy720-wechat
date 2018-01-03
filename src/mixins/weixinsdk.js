@@ -48,7 +48,9 @@ export default {
             // 用户确认分享后执行的回调函数
           },
           ...config,
-          title: config.desc,
+
+          // 暂时注释掉
+          // title: config.desc,
         })
 
         // 分享给朋友
