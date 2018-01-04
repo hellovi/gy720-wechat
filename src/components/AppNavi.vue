@@ -154,7 +154,8 @@ export default {
   font-size: 24px;
 
   & svg {
-    height: 70%;
+    max-width: 100%;
+    max-height: 70%;
     position: absolute;
     left: 34px;
     top: 34px;
