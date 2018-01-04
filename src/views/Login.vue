@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-04 16:09:41
+ * @Last Modified time: 2018-01-04 18:35:31
  */
 
 <template>
@@ -85,7 +85,7 @@ export default {
       if (!username || !password) {
         this.$set(this.formError, 'global', '账号或密码不能为空')
       } else if (isEmailMobile(username)) {
-        let data = `client=moble&password=${password}&`
+        let data = `client=moble&remember_me=1&password=${password}&`
         if (isEmail(username)) {
           data += `email=${username}`
         } else if (isMobile(username)) {
