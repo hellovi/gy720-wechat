@@ -1,20 +1,11 @@
 <template>
   <div class="upload">
     <label class="upload__label">
-      <!-- 加号 -->
-      <div class="upload__svg">
-        <svg><use xlink:href="#plus"/></svg>
-      </div>
 
       <!-- 图片标准说明 -->
-      <div class="upload__tips">
-        <p>请上传 <a>2:1</a> 全景图</p>
-        <p>比例：宽:高= <a>2:1</a> 例如 <a>4000×2000</a> 像素</p>
-        <p>格式：格式 <a>JPG/JPEG</a> 格式</p>
-        <p>尺寸：宽度大于 <a>3000</a> 像素</p>
-        <p>大小：<a>50MB</a> 以下</p>
-        <p>一次可以选择多张（<a>20</a> 张以下）图片上传</p>
-      </div>
+      <svg><use xlink:href="#plus"/></svg>
+      <p>请上传 <a>2:1</a> 全景图（宽度大于 <a>3000</a> 像素）</p>
+      <p><a>50MB</a> 以下、<a>JPG/JPEG</a> 格式</p>
 
       <!-- file表单 -->
       <input
@@ -176,34 +167,23 @@ export default {
     background-color: #fff;
     border:1px solid #aaa;
     display: flex;
+    flex-direction:column;
     justify-content: center;
-    align-items: center;
-  }
 
-  &__svg {
-    width:22%;
-    text-align: center;
+    align-items: center;
 
     & > svg {
       height: 64px;
       width: 64px;
       fill: var(--upload-color);
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
-  }
-
-  &__tips {
-    width: 78%;
 
     & > p {
       margin: 0;
-      font-size: 24px;
+      font-size: 26px;
       color: var(--upload-color);
-      margin-top: 15px;
-
-      &:first-child {
-        margin-top: 0;
-      }
+      margin-top: 18px;
 
       & > a {
         color: var(--primary-color)
