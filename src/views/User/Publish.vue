@@ -32,12 +32,20 @@
       </div>
 
       <!-- 发布按钮 -->
-      <button
-        type="submit"
-        class="publish__btn"
-      >发 布</button>
+      <a class="publish__btn" @click="beforeSubmit">发 布</a>
 
     </form>
+
+    <!-- 提示信息 -->
+    <toast
+      :message = "toast.msg"
+      :iconClass = "toast.class"
+      :toastShow.sync = "toast.visible"
+    ></toast>
+
+    <!-- 底部标记 -->
+    <div ref="footerTag"></div>
+
   </div>
 </template>
 
@@ -48,37 +56,65 @@ export default {
   data() {
     return {
       form: {
-        name: '',
+        name: '', // 作品名称
+        thumb: '', // 封面，默认取第一个场景的封面
+        pano_category_id: 1, // 选择默认场景
+        tag_id: [], // 作品标签
       },
 
       timer: null, // 存放检查切图进度的定时器
 
-      scenes: [],
+      scenes: [], // 场景数据
+
+      toast: {
+        class: 'success', // 提示框图标样式
+        visible: false, // 提示框显示
+        msg: '', // 提示框信息
+      },
     }
   },
 
   computed: {
+    // 查出已经上传成功 & 未切图成功的场景的ids
     source_scene_ids() {
       return this.scenes
         .map(scene => !scene.ok && scene.source_scene_id)
         .filter(source_scene_id => source_scene_id)
     },
+
+    // 过滤出可供表单提交的场景数据
+    submitScenes() {
+      return this.scenes
+        .filter(scene => scene.ok)
+        .map(({ source_scene_id, thumb, name }) => ({
+          source_scene_id,
+          thumb,
+          name,
+        }))
+    },
+
   },
 
   methods: {
+    // 添加场景
     addScene(scene) {
       this.scenes.push(scene)
+      this.$refs.footerTag.scrollIntoView()
     },
 
+    // 更新场景信息
     updateScene(id, data) {
-      debugger
-      const index = this.scenes.findIndex(({ upload_id }) => upload_id === id)
+      // 找到我上传时提交的随机数，或者是存储到数据库的真正id
+      const index = this.scenes
+        .findIndex(({ upload_id, source_scene_id }) => (source_scene_id === id || upload_id === id))
+      // 更新数据
       this.$set(this.scenes, index, {
         ...this.scenes[index],
         ...data,
       })
     },
 
+    // 轮询场景是否切图成功
     checkOk() {
       this.timer = setInterval(() => {
         const { source_scene_ids } = this
@@ -87,27 +123,60 @@ export default {
             .then(({ result }) => {
               result.forEach(({ id, vtour_status, message }) => {
                 if (vtour_status === 30) {
-                  console.log('ok', id, vtour_status, message)
+                  // console.log('ok', id, vtour_status, message)
                   this.updateScene(id, {
                     reason: message,
                     ok: true,
                   })
                 } else {
-                  console.log('nook', id, vtour_status, message)
+                  // console.log('nook', id, vtour_status, message)
                   this.updateScene(id, {
                     reason: message,
                   })
                 }
-
-                // this.updateScene(id, {
-                //   reason: message,
-                //   ok: vtour_status === 30,
-                // }, true)
               })
-              // console.log(result)
             })
         }
       }, 5000)
+    },
+
+    // 发布作品前的校验
+    beforeSubmit() {
+      // 校验作品名称长度
+      const namMatch = this.form.name.length >= 3 && this.form.name.length <= 30
+      // 校验是否有符合标准的场景
+      const sceneMatch = this.submitScenes.length > 0
+
+      if (!namMatch) {
+        this.openToast('warning', '作品名称长度应在3到30个字符之间')
+      } else if (!sceneMatch) {
+        this.openToast('warning', '请先上传全景图片')
+      } else {
+        this.form = {
+          ...this.form,
+          thumb: this.submitScenes[0].thumb,
+          scenes: this.submitScenes,
+        }
+        this.submit()
+      }
+    },
+
+    // 表单提交
+    submit() {
+      this.$http.post('/user/pano', this.form)
+        .then(() => {
+          this.openToast('success', '发布成功')
+          setInterval(() => {
+            this.$router.push('/user/mypanos')
+          }, 2000)
+        })
+    },
+
+    // 打开toast
+    openToast(type, msg) {
+      this.toast.class = type
+      this.toast.msg = msg
+      this.toast.visible = true
     },
   },
 
@@ -132,7 +201,11 @@ export default {
 }
 
 .publish {
-  padding: 20px 20px 100px 20px;
+  padding: 20px 20px 0 20px;
+
+  & > form {
+    padding-bottom: 300px;
+  }
 
   &__list {
 
@@ -166,13 +239,14 @@ export default {
   }
 
   &__btn {
+    display: block;
+    text-align: center;
     height: var(--btn-height);
     line-height: var(--btn-height);
     font-size: 36px;
     width: 100%;
     background-color: var(--primary-color);
     color: #fff;
-    border:0;
     border-radius:10px;
   }
 
