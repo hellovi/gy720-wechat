@@ -7,11 +7,10 @@
       tag-field="level_id"
       @tag-update="tagUpdate" />
 
-    <scroller
+    <AppScroller
       :on-refresh="refresh"
       :on-infinite="infinite"
       ref="scrollerList"
-      class="list-scroller"
     >
       <!-- 摄影师列表 -->
       <ul class="list photographer-list">
@@ -22,7 +21,7 @@
           <Photographer :data="item"/>
         </li>
       </ul>
-    </scroller>
+    </AppScroller>
   </div>
 </template>
 
