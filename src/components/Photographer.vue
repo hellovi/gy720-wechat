@@ -11,8 +11,9 @@
 
     <!-- 头像 -->
     <div class="photographer__avatar">
+      <!-- 跳转摄影师作品页 -->
       <router-link
-        :to="goTo(data.hash_user_id,data.nickname,data.panoramas,data.popular,data.stargazers,data.avatar)"
+        :to="`/author/${data.hash_user_id}`"
         :title="`${data.nickname}`"
       >
         <img v-qiniu-src="data.avatar" :alt="`${data.nickname}`">
@@ -59,9 +60,7 @@
       <!-- 缺省图片 -->
       <li v-for="index in (2 - panos.length)" :key="index">
         <div>
-          <a
-            title="暂无更多作品"
-          >
+          <a title="暂无更多作品">
             <img v-qiniu-src="''" alt="暂无更多作品">
           </a>
         </div>
@@ -101,13 +100,6 @@ export default {
         return `${(value / 10000).toFixed(2)}万`
       }
       return value
-    },
-  },
-
-  methods: {
-    // 摄影师主页跳转地址路由拼接
-    goTo(hash_user_id, nickname, panoramas, popular, stargazers, avatar) {
-      return `/author/${hash_user_id}?nickname=${nickname}&panoramas=${panoramas}&popular=${popular}&stargazers=${stargazers}&avatar=${avatar}`
     },
   },
 }

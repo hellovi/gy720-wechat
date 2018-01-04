@@ -17,15 +17,17 @@
             <div class="pano__image">
               <img v-qiniu-src="list.thumb" :alt="list.name">
             </div>
-            <div class="pano__info">
+          </a>
+          <div class="pano__info">
+            <router-link :to="`/author/${list.hash_user_id}`">
               <img
                 class="pano__avatar"
                 v-qiniu-src="list.avatar"
                 :alt="list.nickname"
               >
-              <span class="ellipsis">{{list.name}}</span>
-            </div>
-          </a>
+            </router-link>
+            <span class="ellipsis">{{list.name}}</span>
+          </div>
         </li>
       </ul>
     </scroller>

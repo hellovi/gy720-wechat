@@ -54,7 +54,9 @@
               @click="openConfirm(item.id,item.name)"
               class="author__list__meta__click"
             >
-              <svg class="author__list__svg"><use xlink:href="#trash"/></svg>
+              <svg class="author__list__svg">
+                <use xlink:href="#trash"/>
+              </svg>
             </a>
           </div>
         </li>
@@ -108,6 +110,16 @@ export default {
         visible: false, // 提示框显示
         msg: '', // 提示框信息
       },
+
+      // 作者信息
+      achieve: {
+        avatar: '',
+        nickname: '',
+        panoramas: '',
+        popular: '',
+        stargazers: '',
+      },
+
     }
   },
 
@@ -138,7 +150,7 @@ export default {
   methods: {
     // 根据是他人作品还是我的作品获取不同数据
     format(item) {
-      return this.isMyPanos ? this.userInfo[item] : this.$route.query[item]
+      return this.isMyPanos ? this.userInfo[item] : this.achieve[item]
     },
 
     // 打开确认弹窗
@@ -172,6 +184,20 @@ export default {
           return panoramas
         })
     },
+
+    // 获取作者详情
+    getAuthorData() {
+      this.$http.get(`/wechatapi/authorachieve/${this.id}`)
+        .then(({ result: { achieve } }) => {
+          this.achieve = { ...this.achieve, ...achieve }
+        })
+    },
+  },
+
+  created() {
+    if (!this.isMyPanos) {
+      this.getAuthorData()
+    }
   },
 
   beforeRouteEnter(to, from, next) {
@@ -254,8 +280,8 @@ export default {
 
     &__svg {
       fill:var(--icon-color);
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
     }
   }
 
