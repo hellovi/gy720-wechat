@@ -19,10 +19,10 @@ export default {
 
   beforeRouteEnter(to, from, next) {
     Http.get('/wechatapi/achieve')
-      .then(({ result: { achieve, profile } }) => {
+      .then(({ result: { achieve } }) => {
         next((vm) => {
           /* eslint-disable no-param-reassign */
-          vm.userInfo = { ...achieve, ...profile }
+          vm.userInfo = achieve
         })
       })
   },
