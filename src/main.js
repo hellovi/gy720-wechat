@@ -7,6 +7,10 @@ import * as directives from './directives'
 
 import { Http, Url } from './utils'
 
+// 引入svg文件
+const requireAllSvg = requireContext => requireContext.keys().map(requireContext)
+requireAllSvg(require.context('./assets/svg', true, /\.svg$/))
+
 Vue.config.productionTip = false
 
 Object.keys(components).forEach((name) => {

@@ -54,7 +54,7 @@
               @click="openConfirm(item.id,item.name)"
               class="author__list__meta__click"
             >
-              <svg class="author__list__svg"><use href="#trash"/></svg>
+              <svg class="author__list__svg"><use xlink:href="#trash"/></svg>
             </a>
           </div>
         </li>

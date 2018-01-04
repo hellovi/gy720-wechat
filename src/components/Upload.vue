@@ -3,7 +3,7 @@
     <label class="upload__label">
       <!-- 加号 -->
       <div class="upload__svg">
-        <svg><use href="#plus"/></svg>
+        <svg><use xlink:href="#plus"/></svg>
       </div>
 
       <!-- 图片标准说明 -->

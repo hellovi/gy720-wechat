@@ -1,6 +1,6 @@
 <template>
   <div class="nodata" :style="{marginTop:`${top}px`}">
-    <svg class="nodata__svg"><use href="#nodata"/></svg>
+    <svg class="nodata__svg"><use xlink:href="#helpless"/></svg>
     <div class="nodata__content">{{ content }}</div>
   </div>
 </template>

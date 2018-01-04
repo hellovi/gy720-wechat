@@ -26,19 +26,19 @@
     <ul class="list photographer__meta">
       <li>
         <svg class="photographer__meta__icon">
-          <use href="#photo"/>
+          <use xlink:href="#photo"/>
         </svg>
         <span>{{ data.panoramas }}</span>
       </li>
       <li>
         <svg class="photographer__meta__icon">
-          <use href="#eye"/>
+          <use xlink:href="#eye"/>
         </svg>
         <span>{{ data.popular | visited }}</span>
       </li>
       <li>
         <svg class="photographer__meta__icon">
-          <use href="#like"/>
+          <use xlink:href="#like"/>
         </svg>
         <span>{{ data.stargazers | visited }}</span>
       </li>

@@ -22,7 +22,7 @@
 
       <!-- 作品名称 -->
       <div class="publish__cell">
-        <svg><use href="#edit"/></svg>
+        <svg><use xlink:href="#pencil"/></svg>
         <div class="publish__cell__input">
           <input
             type="text"

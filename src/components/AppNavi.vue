@@ -14,7 +14,7 @@
             class="app-menu__item"
             :to="item.to"
           >
-            <svg fill="#444"><use :href="`#${item.icon}`"/></svg>
+            <svg fill="#444"><use :xlink:href="`#${item.icon}`"/></svg>
             <span>{{ item.name }}</span>
           </router-link>
         </li>
@@ -25,7 +25,7 @@
       @click="switchNav"
     >
       <svg>
-        <use href="#plusmenu"></use>
+        <use xlink:href="#plus-circled"></use>
       </svg>
     </button>
   </div>
@@ -47,12 +47,12 @@ export default {
         {
           name: '发布',
           to: '/user/publish',
-          icon: 'publish',
+          icon: 'airplane',
         },
         {
           name: '我的',
           to: '/user/mypanos',
-          icon: 'user',
+          icon: 'avatar',
         },
       ],
 
@@ -154,7 +154,6 @@ export default {
   font-size: 24px;
 
   & svg {
-    width: 70%;
     height: 70%;
     position: absolute;
     left: 34px;

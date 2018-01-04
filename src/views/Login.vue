@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2017-12-28 13:52:14
+ * @Last Modified time: 2018-01-04 16:09:41
  */
 
 <template>
@@ -15,11 +15,11 @@
     <!-- 账号登录 -->
     <form class="app-login__form" novalidate>
       <div class="form-item">
-        <svg fill="#888"><use href="#user"/></svg>
+        <svg fill="#888"><use xlink:href="#avatar"/></svg>
         <input type="text" v-model="form.username" @blur="blurUserName" placeholder="请输入光鱼账号">
       </div>
       <div class="form-item">
-        <svg fill="#888"><use href="#password"/></svg>
+        <svg fill="#888"><use xlink:href="#lock"/></svg>
         <input type="password" v-model="form.password" placeholder="请输入密码">
         <span v-show="formError.global" class="error is-danger">{{ formError.global }}</span>
       </div>
@@ -34,7 +34,7 @@
         <div class="left">
           <img src="../assets/left-line.png">
         </div>
-        <svg fill="#fff"><use href="#wechat"/></svg>
+        <svg fill="#fff"><use xlink:href="#wechat"/></svg>
         <div class="right">
           <img src="../assets/right-line.png">
         </div>
@@ -234,10 +234,11 @@ export default {
 
     .left, .right {
       width: calc((100vw - 183px) / 2);
+      display: flex;
+      align-items: center;
 
       img {
         width: 100%;
-        vertical-align: bottom;
       }
     }
   }
