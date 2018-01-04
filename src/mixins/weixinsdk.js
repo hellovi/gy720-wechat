@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-29 16:51:16
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2017-12-29 17:47:11
+ * @Last Modified time: 2018-01-04 09:31:30
  */
 
 import wx from 'weixin-js-sdk'
@@ -48,9 +48,6 @@ export default {
             // 用户确认分享后执行的回调函数
           },
           ...config,
-
-          // 暂时注释掉
-          // title: config.desc,
         })
 
         // 分享给朋友
