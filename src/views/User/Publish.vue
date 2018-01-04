@@ -33,7 +33,12 @@
       </div>
 
       <!-- 发布按钮 -->
-      <a class="publish__btn" @click="beforeSubmit">发 布</a>
+      <button
+        type="button"
+        :disabled="disabled"
+        class="publish__btn"
+        @click="beforeSubmit"
+      >发 布</button>
 
     </form>
 
@@ -72,6 +77,8 @@ export default {
         visible: false, // 提示框显示
         msg: '', // 提示框信息
       },
+
+      disabled: false, // 提交按钮的状态
     }
   },
 
@@ -110,7 +117,7 @@ export default {
       // 延时四秒删除该场景
       setTimeout(() => {
         this.scenes.splice(index, 1)
-      }, 4000)
+      }, 3000)
     },
 
     // 更新场景信息
@@ -132,6 +139,7 @@ export default {
         if (source_scene_ids.length) {
           this.$http.post('/user/sourcescene/vtourprocess', { source_scene_ids })
             .then(({ result }) => {
+              // 注意，这里的id是最终保存到数据库的id，source_scene_id
               result.forEach(({ id, vtour_status, message }) => {
                 if (vtour_status === 30) {
                   // console.log('ok', id, vtour_status, message)
@@ -174,6 +182,7 @@ export default {
 
     // 表单提交
     submit() {
+      this.disabled = true
       this.$http.post('/user/pano', this.form)
         .then(() => {
           this.openToast('success', '发布成功')
@@ -181,6 +190,9 @@ export default {
           setTimeout(() => {
             this.$router.push('/user/mypanos')
           }, 2000)
+        })
+        .then(() => {
+          this.disabled = false
         })
     },
 
@@ -234,7 +246,6 @@ export default {
       overflow: hidden;
 
       & > img {
-        // width: 100%;
         height: 100%;
       }
     }
@@ -263,6 +274,11 @@ export default {
     background-color: var(--primary-color);
     color: #fff;
     border-radius:10px;
+    border: 0;
+
+    &:disabled {
+      background-color: var(--upload-color);
+    }
   }
 
   &__cell {
