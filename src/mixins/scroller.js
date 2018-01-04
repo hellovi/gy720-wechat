@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-29 09:52:26
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2017-12-29 13:42:52
+ * @Last Modified time: 2018-01-04 18:25:33
  */
 
  export default {
@@ -49,7 +49,8 @@
       */
      refresh(done) {
        this.getPageData()
-        .then(() => {
+        .then((res) => {
+          this.setDataEmpty(res)
           done()
         })
      },
@@ -62,6 +63,7 @@
        if (this.lastPage !== this.page) {
          this.getPageData(this.page += 1, true)
           .then((res) => {
+            this.setDataEmpty(res)
             done(!res.total || this.lastPage === this.page)
           })
           .catch(() => {
@@ -84,6 +86,16 @@
          ...this.$route.query,
        }
        return this.getListData(this.parse(query), status)
+     },
+
+     /**
+      * 根据页面列表数据设置无数据状态
+      * @param {Object} res 列表数据
+      */
+     setDataEmpty(res) {
+       this.$nextTick(() => {
+         this.$refs.scrollerList.dataEmpty = !res.total
+       })
      },
    },
 

@@ -1,11 +1,10 @@
 <template>
   <div>
     <FilterBar class="panos-filter" :left-tag-data="filterTag" @tag-update="tagUpdate"/>
-    <scroller
+    <AppScroller
       :on-refresh="refresh"
       :on-infinite="infinite"
       ref="scrollerList"
-      class="list-scroller"
     >
       <ul class="panos">
         <li
@@ -30,7 +29,7 @@
           </div>
         </li>
       </ul>
-    </scroller>
+    </AppScroller>
   </div>
 </template>
 

@@ -74,7 +74,7 @@ export default {
   computed: {
     checkedTag() {
       const tagFieldId = this.$route.query && +this.$route.query[this.tagField]
-      return tagFieldId ? this.leftTagData.find(item => item.id === tagFieldId) : { name: '全部' }
+      return tagFieldId ? this.leftTagData.find(item => item.id === tagFieldId) || { name: '' } : { name: '全部' }
     },
   },
 
