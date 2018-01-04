@@ -9,7 +9,7 @@
       <!-- 图片标准说明 -->
       <div class="upload__tips">
         <p>请上传 <a>2:1</a> 全景图</p>
-        <p>比例：宽：高= <a>2：1</a> 例如 <a>4000×2000</a> 像素</p>
+        <p>比例：宽:高= <a>2:1</a> 例如 <a>4000×2000</a> 像素</p>
         <p>格式：格式 <a>JPG/JPEG</a> 格式</p>
         <p>尺寸：宽度大于 <a>3000</a> 像素</p>
         <p>大小：<a>50MB</a> 以下</p>
@@ -120,6 +120,7 @@ export default {
       formData.append('file', file)
       formData.append('source_scene_category_id', 1)
 
+      // 定义一个XMLHttpRequest对象
       const xhr = new XMLHttpRequest()
       xhr.open('POST', '/user/sourcescene/uploadnormal', true)
       xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token')}`)
@@ -128,8 +129,7 @@ export default {
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
       xhr.send(formData)
 
-      // console.log(xhr)
-
+      // 监听回调
       xhr.addEventListener('load', (data) => {
         const resJson = JSON.parse(data.target.response)
 
@@ -140,6 +140,8 @@ export default {
           this.$emit('update-scene', +result.upload_id, {
             reason,
           })
+          // 先注释移除事件
+          this.$emit('remove-scene', +result.upload_id)
         } else {
           this.$emit('update-scene', +result.upload_id, {
             ...result,
@@ -148,12 +150,9 @@ export default {
         }
       })
 
+      // 进度条处理
       // xhr.addEventListener('progress', (event) => {
       //   console.log(event)
-      // })
-
-      // xhr.addEventListener('error', (res) => {
-      //   console.log(res)
       // })
     },
   },
@@ -182,7 +181,7 @@ export default {
   }
 
   &__svg {
-    width:25%;
+    width:22%;
     text-align: center;
 
     & > svg {
@@ -194,7 +193,7 @@ export default {
   }
 
   &__tips {
-    width: 75%;
+    width: 78%;
 
     & > p {
       margin: 0;

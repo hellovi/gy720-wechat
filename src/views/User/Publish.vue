@@ -17,6 +17,7 @@
       <Upload
         @add-scene="addScene"
         @update-scene="updateScene"
+        @remove-scene="removeScene"
       ></Upload>
 
       <!-- 作品名称 -->
@@ -102,6 +103,16 @@ export default {
       this.$refs.footerTag.scrollIntoView()
     },
 
+    // 自动删除不符合标准的场景
+    removeScene(id) {
+      const index = this.scenes
+        .findIndex(({ upload_id }) => upload_id === id)
+      // 延时四秒删除该场景
+      setTimeout(() => {
+        this.scenes.splice(index, 1)
+      }, 4000)
+    },
+
     // 更新场景信息
     updateScene(id, data) {
       // 找到我上传时提交的随机数，或者是存储到数据库的真正id
@@ -166,7 +177,8 @@ export default {
       this.$http.post('/user/pano', this.form)
         .then(() => {
           this.openToast('success', '发布成功')
-          setInterval(() => {
+          // 跳转到个人中心
+          setTimeout(() => {
             this.$router.push('/user/mypanos')
           }, 2000)
         })
@@ -198,10 +210,13 @@ export default {
   --btn-height:70px;
   --icon-color: #666;
   --upload-color:#959595;
+  --meta-height: 40px;
+  --padding: 20px;
 }
 
 .publish {
-  padding: 20px 20px 0 20px;
+  padding: var(--padding);
+  padding-bottom: 0;
 
   & > form {
     padding-bottom: 300px;
@@ -227,11 +242,11 @@ export default {
     &__meta {
       position: absolute;
       bottom: 0;
-      height: 40px;
+      height: var(--meta-height);
       width: 100%;
       padding: 0 10px;
       text-align:left;
-      line-height: 40px;
+      line-height: var(--meta-height);
       background-color: rgba(0, 0, 0, 0.5);
       color:#fff;
       font-size: 24px;
@@ -251,7 +266,7 @@ export default {
   }
 
   &__cell {
-    padding: 20px 20px;
+    padding: var(--padding);
     display: flex;
     align-items: center;
     border-bottom: 1px solid #999;
@@ -265,7 +280,7 @@ export default {
 
     &__input {
       flex:1;
-      padding: 0 20px;
+      padding: 0 var(--padding);
       font-size: 30px;
 
       & input {
