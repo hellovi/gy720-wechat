@@ -1,11 +1,19 @@
 import Vue from 'vue'
 import VueScroller from 'vue-scroller'
+import FastClick from 'fastclick'
+
 import App from './App'
 import router from './router'
 import * as components from './components'
 import * as directives from './directives'
-
 import { Http, Url } from './utils'
+
+// 安卓端无需调用
+const userAgent = window.navigator.userAgent
+if (userAgent.indexOf('Android') === -1 || userAgent.indexOf('Linux') === -1) {
+  // 去除点击延迟
+  FastClick.attach(document.body)
+}
 
 // 引入svg文件
 const requireAllSvg = requireContext => requireContext.keys().map(requireContext)

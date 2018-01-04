@@ -12,6 +12,7 @@
     "deploy": "node build/build.js && node build/deploy.js"
   },
   "dependencies": {
+    "fastclick": "^1.0.6",
     "normalize.css": "^7.0.0",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
