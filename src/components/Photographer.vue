@@ -6,7 +6,7 @@
       v-if="data.is_certificate"
       class="photographer__label"
     >
-      <span>企业认证</span>
+      <span>{{data.certificate_type_name}}</span>
     </div>
 
     <!-- 头像 -->

@@ -11,7 +11,19 @@
       >
       <!-- 用户信息 -->
       <div class="author__header__meta">
-        <div>{{ format('nickname') }}</div>
+        <div>
+          <!-- 用户名 -->
+          <div class="author__header__meta__name">
+            {{ format('nickname') }}
+          </div>
+          <!-- 认证标签 -->
+          <div
+            class="author__header__meta__tag"
+            v-if="format('is_certificate')"
+          >
+            {{ format('certificate_type_name') }}
+          </div>
+        </div>
         <ul class="list">
           <li>作品：{{ format('panoramas') }}</li>
           <li>人气：{{ format('popular') | visited }}</li>
@@ -118,6 +130,8 @@ export default {
         panoramas: '',
         popular: '',
         stargazers: '',
+        is_certificate: false,
+        certificate_type_name: '',
       },
 
     }
@@ -299,16 +313,39 @@ export default {
       width: var(--avatar-width);
       height: var(--avatar-width);
       border-radius: 50%;
+      flex-shrink: 0;
     }
 
     &__meta {
       flex-grow: 1;
       padding: 0 var(--header-padding);
+      min-width: 0;
 
       & > div {
         color: var(--text-color);
         font-size: 32px;
         margin-bottom: 24px;
+        display: flex;
+        justify-content: flex-start;
+        align-items:center;
+        width: 100%;
+      }
+
+      &__name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &__tag {
+        margin: 0 40px 0 20px;
+        padding: 0 10px;
+        height: 40px;
+        line-height: 40px;
+        color: #fff;
+        background-color: #FF8A00;
+        font-size: 24px;
+        flex-shrink: 0;
       }
 
       & > ul {
@@ -324,6 +361,7 @@ export default {
     }
 
     &__btn {
+      flex-shrink: 0;
       display: block;
       width: var(--avatar-width);
       height: var(--btn-height);
