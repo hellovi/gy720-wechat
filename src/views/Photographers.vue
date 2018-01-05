@@ -64,7 +64,6 @@ export default {
 </script>
 
 <style lang="postcss">
-@import 'scroller.css';
 .photographer-list {
   padding: 0 20px;
 

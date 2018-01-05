@@ -39,7 +39,7 @@
     </div>
 
     <!-- 滚动区域 -->
-    <scroller
+    <AppScroller
       :on-refresh="refresh"
       :on-infinite="infinite"
       ref="scrollerList"
@@ -73,7 +73,7 @@
           </div>
         </li>
       </ul>
-    </scroller>
+    </AppScroller>
 
     <!-- 确认弹窗 -->
     <confirm
@@ -369,7 +369,9 @@ export default {
   }
 
   &__scroller {
-    padding-top: var(--header-height);
+    &.list-scroller {
+      padding-top: var(--header-height);
+    }
   }
 
   &__confirm {

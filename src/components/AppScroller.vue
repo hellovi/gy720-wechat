@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2018-01-04 17:27:12
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-04 18:15:20
+ * @Last Modified time: 2018-01-05 14:56:55
  */
 
 <template>
@@ -66,7 +66,7 @@ export default {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 .list-scroller {
   padding-top: 100px;
 

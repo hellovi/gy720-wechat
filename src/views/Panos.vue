@@ -76,8 +76,6 @@ export default {
 </script>
 
 <style lang="postcss">
-@import 'scroller.css';
-
 .panos {
   list-style: none;
   display: flex;
