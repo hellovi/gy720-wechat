@@ -12,7 +12,7 @@
         type="file"
         hidden
         multiple
-        accept='image/*'
+        accept='image/jpg,image/jpeg'
         @change="onChange"
       >
     </label>
@@ -169,8 +169,11 @@ export default {
     display: flex;
     flex-direction:column;
     justify-content: center;
-
     align-items: center;
+
+    & > *{
+      pointer-events: none;
+    }
 
     & > svg {
       height: 64px;
