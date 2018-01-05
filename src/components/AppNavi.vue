@@ -62,11 +62,6 @@ export default {
   },
 
   computed: {
-    // 返回当前path
-    currentRouter() {
-      return this.$route.path
-    },
-
     // 判断当前路由是否设置了该路由不显示该组件
     hideNav() {
       return this.$route.meta.hideNav
@@ -75,7 +70,7 @@ export default {
 
   watch: {
     // 路由变化的时候重置导航栏
-    currentRouter() {
+    $route() {
       this.open = false
     },
   },
@@ -107,6 +102,16 @@ export default {
   overflow: hidden;
   transition: transform 0.3s;
   font-size: 18px;
+  pointer-events: none;
+
+  &.open {
+    & .app-menu__nav {
+      transform: rotate(0) scale(1);
+    }
+    & .app-menu__btn {
+      transform: translateX(-50%) rotate(315deg);
+    }
+  }
 }
 
 .app-menu__btn {
@@ -122,6 +127,7 @@ export default {
   font-size: inherit;
   transform: translateX(-50%);
   transition: inherit;
+  pointer-events: auto;
 
   &:focus {
     outline: none;
@@ -142,6 +148,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.6);
   transform: rotate(315deg) scale(0);
   transition: inherit;
+  pointer-events: auto;
 }
 
 .app-menu__item {
@@ -187,15 +194,6 @@ export default {
 :last-child > .app-menu__item {
   top: 88px;
   right: 21px;
-}
-
-.open {
-  & .app-menu__btn {
-    transform: translateX(-50%) rotate(315deg);
-  }
-  & .app-menu__nav {
-    transform: rotate(0) scale(1);
-  }
 }
 </style>
 
