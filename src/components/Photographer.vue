@@ -216,4 +216,120 @@ export default {
     }
   }
 }
+
+@media screen and (min-width: 640px) {
+  .photographer {
+    padding: 16px;
+
+    &__avatar {
+      width: calc(var(--avatar-width) * 0.8);
+      height: calc(var(--avatar-width) * 0.8);
+      margin-top: 20px;
+    }
+
+    &__name {
+      font-size: 20px;
+      margin: 16px 0;
+    }
+
+    &__meta {
+
+      &>li {
+        font-size: 10px;
+        line-height: calc(var(--icon-width) * 0.8);
+      }
+
+      &__icon {
+        margin-right: 8px;
+        width: calc(var(--icon-width) * 0.8);
+        height: calc(var(--icon-width) * 0.8);
+      }
+    }
+
+    &__panos {
+      padding-bottom: 16px;
+
+      li {
+        &:first-child {
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .photographer {
+    padding: 14px;
+
+    &__avatar {
+      width: calc(var(--avatar-width) * 0.4);
+      height: calc(var(--avatar-width) * 0.4);
+    }
+
+    &__name {
+      font-size: 16px;
+    }
+
+    &__meta {
+      & > li {
+        line-height: calc(var(--icon-width) * 0.5);
+      }
+
+      &__icon {
+        margin-right: 8px;
+        width: calc(var(--icon-width) * 0.5);
+        height: calc(var(--icon-width) * 0.5);
+      }
+    }
+
+    &__panos {
+      padding-bottom: 14px;
+
+      li {
+        &:first-child {
+          margin-right: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .photographer {
+    padding: 10px;
+
+    &__avatar {
+      width: calc(var(--avatar-width) * 0.3);
+      height: calc(var(--avatar-width) * 0.3);
+    }
+
+    &__name {
+      font-size: 12px;
+    }
+
+    &__meta {
+      & > li {
+        font-size: 8px;
+        line-height: calc(var(--icon-width) * 0.4);
+      }
+
+      &__icon {
+        margin-right: 8px;
+        width: calc(var(--icon-width) * 0.4);
+        height: calc(var(--icon-width) * 0.4);
+      }
+    }
+
+    &__panos {
+      padding-bottom: 10px;
+
+      li {
+        &:first-child {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
 </style>

@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2018-01-04 17:27:12
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-05 14:56:55
+ * @Last Modified time: 2018-01-05 17:36:01
  */
 
 <template>
@@ -71,7 +71,27 @@ export default {
   padding-top: 100px;
 
   .no-data-text {
-    font-size: 24px;
+    font-size: 22px;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .list-scroller {
+    padding-top: 80px;
+
+    .no-data-text {
+      font-size: 12px;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .list-scroller {
+    padding-top: 60px;
+
+    .no-data-text {
+      font-size: 10px;
+    }
   }
 }
 </style>

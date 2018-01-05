@@ -67,8 +67,60 @@ export default {
 .photographer-list {
   padding: 0 20px;
 
-  &>li:not(:last-child) {
+  &>li {
     margin-bottom: 20px;
   }
 }
+
+@media screen and (min-width: 640px) {
+  .photographer-list {
+    &>li {
+      display: inline-block;
+    }
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 749px) {
+  .photographer-list {
+    padding: 0 16px;
+
+    &>li{
+      margin: 0 16px 16px 0;
+      width: calc((100vw - 48px) / 2);
+
+      &:nth-child(2n+0) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1023px) {
+  .photographer-list {
+    padding: 0 14px;
+    &>li{
+      margin: 0 14px 14px 0;
+      width: calc((100vw - 56px) / 3);
+
+      &:nth-child(3n+0) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .photographer-list {
+    padding: 0 10px;
+    &>li{
+      margin: 0 10px 10px 0;
+      width: calc((100vw - 50px) / 4);
+
+      &:nth-child(4n+0) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
 </style>

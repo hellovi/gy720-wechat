@@ -1,47 +1,30 @@
 <template>
   <div class="filter-bar">
-    <div class="filter-bar__left">
-      <div
-        class="filter"
-        @click="swtichVisible"
-        v-clickoutside="closeVisible"
-      >
-        <span>{{ leftName }}</span>
-        <ul v-show="visible" class="filter__list" @click.stop>
-          <li
-            class="filter__item"
-            v-for="list in leftTagData"
-            :class="{active: checkedTag.id === list.id}"
-            :key="list.id"
-            @click="checkHandle(list)"
-          >{{ list.name }}</li>
-        </ul>
+    <div class="filter-content">
+      <div class="filter-bar__left">
+        <div class="filter" @click="swtichVisible" v-clickoutside="closeVisible">
+          <span>{{ leftName }}</span>
+          <ul
+            v-show="visible"
+            class="filter__list"
+            @click.stop
+          >
+            <li
+              class="filter__item"
+              v-for="list in leftTagData"
+              :class="{active: checkedTag.id === list.id}"
+              :key="list.id"
+              @click="checkHandle(list)"
+            >{{ list.name }}</li>
+          </ul>
+        </div>
+        <!-- 当前选中 -->
+        <span class="filter-bar__left-checked" v-if="checkedTag">{{ checkedTag.name }}</span>
       </div>
-      <!-- 当前选中 -->
-      <span class="filter-bar__left-checked" v-if="checkedTag">{{ checkedTag.name }}</span>
     </div>
-    <!-- <div
-      class="filter"
-      @click="swtichSort"
-      v-clickoutside="closeSort"
-    >
-      <span>排序</span>
-      <ul
-        v-show="filterSort"
-        class="filter-sort"
-        @click.stop
-      >
-        <li
-          class="filter-sort__item"
-          v-for="(item, index) in rightTagData"
-          :key="index"
-        >
-          <a href="">全部</a>
-        </li>
-      </ul>
-    </div> -->
   </div>
 </template>
+
 
 <script>
 export default {
@@ -108,14 +91,20 @@ export default {
 
 .filter-bar {
   position: relative;
-  display: flex;
-  justify-content: space-between;
   height: 100px;
-  padding: 0 calc(16 / 710 * 100%);
-  border: 20px solid #ebebeb;
-  background-color: #fff;
+  background-color: #ebebeb;
   font-size: 28px;
+  padding: 20px;
   z-index: 10;
+
+  & .filter-content {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    height: 100%;
+    padding: 0 calc(16 / 710 * 100%);
+  }
 
   &__left {
     display: flex;
@@ -133,14 +122,14 @@ export default {
 .filter {
   display: flex;
   align-items: center;
-}
 
-.filter::after {
-  content: "";
-  border-width: 10px 10px 0 10px;
-  border-style: solid;
-  border-color: currentColor transparent transparent;
-  margin-left: calc(6 / 14 * 1em);
+  &::after {
+    content: "";
+    border-width: 10px 10px 0 10px;
+    border-style: solid;
+    border-color: currentColor transparent transparent;
+    margin-left: calc(6 / 14 * 1em);
+  }
 }
 
 .filter__list {
@@ -220,4 +209,62 @@ export default {
     }
   }
 }
+
+@media screen and (min-width: 640px) {
+  .filter-bar {
+    font-size: 20px;
+    padding: 16px;
+    height: 80px;
+
+    .filter {
+      &::after {
+        content: "";
+        border-width: 8px 8px 0 8px;
+      }
+    }
+
+    .filter__list {
+      width: 80%;
+      padding: 16px;
+
+      .filter__item {
+        width: calc((100% - 64px) / 4);
+        height: 40px;
+        line-height: 38px;
+        font-size: 16px;
+        margin: 8px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .filter-bar {
+    font-size: 16px;
+    padding: 14px;
+
+    .filter {
+      &::after {
+        content: "";
+        border-width: 6px 6px 0 6px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .filter-bar {
+    font-size: 12px;
+    padding: 10px;
+    height: 60px;
+
+    .filter {
+      &::after {
+        content: "";
+        border-width: 4px 4px 0 4px;
+      }
+    }
+  }
+}
+
 </style>

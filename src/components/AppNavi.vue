@@ -164,8 +164,8 @@ export default {
     max-width: 100%;
     max-height: 70%;
     position: absolute;
-    left: 34px;
-    top: 34px;
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
   }
 
@@ -181,19 +181,76 @@ export default {
 }
 
 :first-child > .app-menu__item {
-  top: 88px;
-  left: 21px;
+  top: 25%;
+  left: 7%;
 }
 
 :nth-child(2) > .app-menu__item {
-  top: 17px;
+  top: 4%;
   left: 50%;
   transform: translateX(-50%);
 }
 
 :last-child > .app-menu__item {
-  top: 88px;
-  right: 21px;
+  top: 25%;
+  right: 7%;
+}
+
+@media screen and (min-width: 640px) {
+  .app-menu {
+    width: calc(var(--nav-size) * 0.8);
+    height: calc(210px * 0.8);
+
+    .app-menu__btn {
+      width: calc(var(--circle-size) * 0.8);
+      height: calc(var(--circle-size) * 0.8);
+    }
+
+    .app-menu__nav {
+      height: calc(var(--nav-size) * 0.8);
+    }
+
+    .app-menu__item {
+      width: calc(var(--circle-size) * 0.8);
+      height: calc(var(--circle-size) * 0.8);
+      font-size: 18px;
+
+      & span {
+        margin-top: 6px;
+      }
+    }
+  }
+}
+
+
+@media screen and (min-width: 750px) {
+  .app-menu {
+    width: calc(var(--nav-size) * 0.6);
+    height: calc(210px * 0.6);
+
+    .app-menu__btn {
+      width: calc(var(--circle-size) * 0.6);
+      height: calc(var(--circle-size) * 0.6);
+    }
+
+    .app-menu__nav {
+      height: calc(var(--nav-size) * 0.6);
+    }
+
+    .app-menu__item {
+      width: calc(var(--circle-size) * 0.6);
+      height: calc(var(--circle-size) * 0.6);
+      font-size: 14px;
+
+      & span {
+        margin-top: 4px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+
 }
 </style>
 

@@ -80,7 +80,7 @@ export default {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 0;
   margin: 0 0 0 20px;
 
@@ -120,6 +120,72 @@ export default {
     margin-right: 14px;
     border-radius: 50%;
     transform: translateY(-22%);
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .panos {
+    margin: 0 0 0 16px;
+
+    & .pano {
+      width: calc((100vw - 64px) / 3);
+      margin: 0 16px 16px 0;
+    }
+
+    & .pano__info {
+      height: 40px;
+      font-size: 14px;
+    }
+
+    & .pano__avatar {
+      width: 45px;
+      height: 45px;
+      margin-right: 10px;
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .panos {
+    margin: 0 0 0 14px;
+
+    & .pano {
+      width: calc((100vw - 70px) / 4);
+      margin: 0 14px 14px 0;
+    }
+
+    & .pano__info {
+      height: 35px;
+      font-size: 12px;
+    }
+
+    & .pano__avatar {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .panos {
+    margin: 0 0 0 10px;
+
+    & .pano {
+      width: calc((100vw - 60px) / 5);
+      margin: 0 10px 10px 0;
+    }
+
+    & .pano__info {
+      height: 30px;
+      font-size: 10px;
+    }
+
+    & .pano__avatar {
+      width:35px;
+      height: 35px;
+      margin-right: 8px;
+    }
   }
 }
 </style>
