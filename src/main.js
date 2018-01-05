@@ -10,7 +10,7 @@ import { Http, Url } from './utils'
 
 // 安卓端无需调用
 const userAgent = window.navigator.userAgent
-if (userAgent.indexOf('Android') === -1 || userAgent.indexOf('Linux') === -1) {
+if (userAgent.indexOf('Android') < 0 || userAgent.indexOf('Linux') < 0) {
   // 去除点击延迟
   FastClick.attach(document.body)
 }

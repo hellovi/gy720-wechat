@@ -3,10 +3,12 @@
  * @Author: chenliangshan
  * @Date: 2017-12-29 16:51:16
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-04 09:31:30
+ * @Last Modified time: 2018-01-05 10:27:08
  */
 
 import wx from 'weixin-js-sdk'
+
+const userAgent = window.navigator.userAgent
 
 export default {
   data() {
@@ -22,14 +24,17 @@ export default {
         .then(({
           result,
         }) => {
-          wx.config(result.sdk)
-          this.weixinSDKConfig = { ...result,
+          if (userAgent.indexOf('MicroMessenger') > -1) {
+            wx.config(result.sdk)
+            this.weixinSDKConfig = { ...result }
           }
           return result
         })
     },
 
     setWxReady(info = this.shareInfo) {
+      if (userAgent.indexOf('MicroMessenger') < 0) return
+
       const {
         seo,
         shareLogo,
@@ -101,10 +106,12 @@ export default {
 
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      vm.getWxJsdk()
+      if (userAgent.indexOf('MicroMessenger') > -1) {
+        vm.getWxJsdk()
         .then(() => {
           vm.setWxReady()
         })
+      }
     })
   },
 
