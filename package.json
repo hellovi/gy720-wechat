@@ -2,6 +2,7 @@
   "name": "gy720.weixin",
   "version": "1.0.0",
   "description": "gy720.weixin is a Vue.js project",
+  "companyName": "光鱼全景",
   "author": "chenli",
   "private": true,
   "scripts": {

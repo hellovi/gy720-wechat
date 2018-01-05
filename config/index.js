@@ -16,6 +16,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      '/favicon.ico': proxySetting,
       '/user/': proxySetting,
       '/wechatapi/': proxySetting,
       '/pano/': proxySetting

@@ -204,6 +204,11 @@ export default {
       this.$http.get(`/wechatapi/authorachieve/${this.id}`)
         .then(({ result: { achieve } }) => {
           this.achieve = { ...this.achieve, ...achieve }
+          const title = `${achieve.nickname} - ${process.env.COMPANY_NAME}`
+          this.shareInfo = {
+            title,
+          }
+          this.setWxTitle(title)
         })
     },
   },
@@ -212,17 +217,6 @@ export default {
     if (!this.isMyPanos) {
       this.getAuthorData()
     }
-  },
-
-  beforeRouteEnter(to, from, next) {
-    // 如果是他人作品页面，就加上作者名称
-    if (to.path !== '/user/mypanos') {
-      const authorName = to.query.nickname
-      if (authorName) {
-        document.title = `${authorName} - 光鱼全景`
-      }
-    }
-    next()
   },
 
 }

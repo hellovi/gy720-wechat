@@ -3,13 +3,13 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-04 18:35:31
+ * @Last Modified time: 2018-01-05 11:18:39
  */
 
 <template>
   <div class="app-login">
     <div class="app-login__logo">
-      <img src="../assets/logo.png" alt="光鱼全景">
+      <img src="../assets/logo.png" :alt="title">
     </div>
 
     <!-- 账号登录 -->
@@ -75,6 +75,8 @@ export default {
         msg: '',
         visible: false,
       },
+
+      title: `${process.env.COMPANY_NAME}`,
     }
   },
 

@@ -61,7 +61,7 @@
       <li v-for="index in (2 - panos.length)" :key="index">
         <div>
           <a title="暂无更多作品">
-            <img v-qiniu-src="''" alt="暂无更多作品">
+            <img v-qiniu-src alt="暂无更多作品">
           </a>
         </div>
       </li>

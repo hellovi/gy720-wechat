@@ -3,10 +3,11 @@
  * @Author: chenliangshan
  * @Date: 2017-12-29 16:51:16
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-05 10:27:08
+ * @Last Modified time: 2018-01-05 11:42:45
  */
 
 import wx from 'weixin-js-sdk'
+import { WxTools } from '@/utils'
 
 const userAgent = window.navigator.userAgent
 
@@ -19,6 +20,10 @@ export default {
   },
 
   methods: {
+    /**
+     * 通过url获取微信sdk授权配置信息
+     * @param {String} url
+     */
     getWxJsdk(url = window.location.href) {
       return this.$http.get(`/wechatapi/jssdk?url=${encodeURIComponent(url)}`)
         .then(({
@@ -32,6 +37,10 @@ export default {
         })
     },
 
+    /**
+     * 设置微信分享功能信息内容
+     * @param {Object} info 微信分享自定义信息字段
+     */
     setWxReady(info = this.shareInfo) {
       if (userAgent.indexOf('MicroMessenger') < 0) return
 
@@ -101,6 +110,15 @@ export default {
           ...config,
         })
       })
+    },
+
+    /**
+     * 设置微信标题
+     * @param {String} title 自定义标题
+     * @param {String} img 自定义图片
+     */
+    setWxTitle(title, img) {
+      WxTools.setWechatTitle(title, img)
     },
   },
 
