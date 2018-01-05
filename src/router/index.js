@@ -10,6 +10,8 @@ import * as views from '@/views'
 
 Vue.use(Router)
 
+let hmtCache = []
+
 const router = new Router({
   base: 'wechat',
   mode: 'history',
@@ -85,14 +87,26 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // 更换页面title
-  const defaultTitle = '光鱼全景'
+  const defaultTitle = `${process.env.COMPANY_NAME}`
   if (to.meta.title) {
     document.title = `${to.meta.title} - ${defaultTitle}`
   } else {
     document.title = defaultTitle
   }
-
   next()
+})
+
+router.afterEach((to) => {
+  if (to.path) {
+      /* eslint-disable */
+      hmtCache.push(['_trackPageview', `/wechat${to.fullPath}`])
+      if (window._hmt) {
+          hmtCache.map((cache) => {
+            window._hmt.push(cache)
+          })
+          hmtCache = []
+      }
+  }
 })
 
 
