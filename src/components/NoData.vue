@@ -37,7 +37,7 @@ export default {
 
 .nodata {
   width: 100%;
-  min-height: 100vmin;
+  min-height: calc(100vmin - 120px);
   display: flex;
   justify-content: center;
   align-items: center;
