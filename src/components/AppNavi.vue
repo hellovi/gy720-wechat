@@ -1,17 +1,17 @@
 <template>
   <div
     v-show="!hideNav"
-    class="app-menu"
+    class="app-menu max-box"
     :class="{open}"
   >
-    <nav class="app-menu__nav">
+    <nav class="app-menu__nav max__nav">
       <ul class="list">
         <li
           v-for="item in items"
           :key="item.name"
         >
           <router-link
-            class="app-menu__item"
+            class="app-menu__item max__item"
             :to="item.to"
           >
             <svg fill="#444"><use :xlink:href="`#${item.icon}`"/></svg>
@@ -21,7 +21,7 @@
       </ul>
     </nav>
     <button
-      class="app-menu__btn"
+      class="app-menu__btn max__btn"
       @click="switchNav"
     >
       <svg>
@@ -250,7 +250,39 @@ export default {
 }
 
 @media screen and (min-width: 1024px) {
+  .app-menu {
+    &.max-box {
+      width: var(--nav-size);
+      height: 210px;
+    }
 
+    .app-menu__btn {
+      &.max__btn {
+        width: var(--circle-size);
+        height: var(--circle-size);
+      }
+    }
+
+    .app-menu__nav {
+      &.max__nav {
+        height: var(--nav-size);
+      }
+    }
+
+    .app-menu__item {
+
+      &.max__item {
+        width: var(--circle-size);
+        height: var(--circle-size);
+        font-size: 14px;
+
+        & span {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
 }
+
 </style>
 

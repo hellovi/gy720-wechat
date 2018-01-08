@@ -221,6 +221,12 @@ export default {
   .photographer {
     padding: 16px;
 
+    &__label {
+      padding: 0 10px;
+      line-height: 32px;
+      font-size: 20px;
+    }
+
     &__avatar {
       width: calc(var(--avatar-width) * 0.8);
       height: calc(var(--avatar-width) * 0.8);
@@ -233,6 +239,7 @@ export default {
     }
 
     &__meta {
+      margin: 20px 0;
 
       &>li {
         font-size: 10px;
@@ -262,6 +269,12 @@ export default {
   .photographer {
     padding: 14px;
 
+    &__label {
+      padding: 0 8px;
+      line-height: 24px;
+      font-size: 14px;
+    }
+
     &__avatar {
       width: calc(var(--avatar-width) * 0.4);
       height: calc(var(--avatar-width) * 0.4);
@@ -272,6 +285,8 @@ export default {
     }
 
     &__meta {
+      margin: 14px 0;
+
       & > li {
         line-height: calc(var(--icon-width) * 0.5);
       }
@@ -299,6 +314,12 @@ export default {
   .photographer {
     padding: 10px;
 
+    &__label {
+      padding: 0 6px;
+      line-height: 18px;
+      font-size: 10px;
+    }
+
     &__avatar {
       width: calc(var(--avatar-width) * 0.3);
       height: calc(var(--avatar-width) * 0.3);
@@ -309,6 +330,8 @@ export default {
     }
 
     &__meta {
+      margin: 10px 0;
+
       & > li {
         font-size: 8px;
         line-height: calc(var(--icon-width) * 0.4);

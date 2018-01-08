@@ -11,6 +11,11 @@
           >
             <li
               class="filter__item"
+              :class="{active: !checkedTag.id}"
+              @click="checkHandle()"
+            >全部</li>
+            <li
+              class="filter__item"
               v-for="list in leftTagData"
               :class="{active: checkedTag.id === list.id}"
               :key="list.id"
@@ -78,7 +83,7 @@ export default {
       this.filterSort = false
     },
 
-    checkHandle(item) {
+    checkHandle(item = { id: '', name: '全部' }) {
       this.visible = false
       this.$emit('tag-update', item)
     },

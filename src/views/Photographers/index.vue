@@ -27,11 +27,14 @@
 
 <script>
 import { scroller, weixinsdk } from '@/mixins'
+import Photographer from './components/Photographer'
 
 export default {
   name: 'Photographers',
 
   mixins: [scroller, weixinsdk],
+
+  components: { Photographer },
 
   data() {
     return {
