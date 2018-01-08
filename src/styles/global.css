@@ -8,6 +8,10 @@ body {
   background-color: #ebebeb;
 }
 
+html, body {
+  height: 100%;
+}
+
 *,
  ::before,
  ::after {

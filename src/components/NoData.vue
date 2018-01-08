@@ -22,7 +22,7 @@ export default {
     },
     top: {
       type: Number,
-      default: 200,
+      default: 0,
     },
   },
 }
@@ -37,6 +37,7 @@ export default {
 
 .nodata {
   width: 100%;
+  min-height: 100vmin;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -3,55 +3,61 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-05 11:18:39
+ * @Last Modified time: 2018-01-08 15:04:00
  */
 
 <template>
   <div class="app-login">
-    <div class="app-login__logo">
-      <img src="../assets/logo.png" :alt="title">
+    <div class="app-login__max">
+      <div class="app-login__logo">
+        <img src="../assets/logo.png" :alt="title">
+      </div>
+
+      <!-- 账号登录 -->
+      <form class="app-login__form" novalidate>
+        <div class="form-item">
+          <svg fill="#888">
+            <use xlink:href="#avatar" />
+          </svg>
+          <input type="text" v-model="form.username" @blur="blurUserName" placeholder="请输入光鱼账号">
+        </div>
+        <div class="form-item">
+          <svg fill="#888">
+            <use xlink:href="#lock" />
+          </svg>
+          <input type="password" v-model="form.password" placeholder="请输入密码">
+          <span v-show="formError.global" class="error is-danger">{{ formError.global }}</span>
+        </div>
+        <div class="form-submit">
+          <button type="button" @click="formSubmit">登录</button>
+        </div>
+      </form>
+
+      <!-- 微信登录 -->
+      <div class="app-oauth__login">
+        <div class="app-oauth__icon">
+          <div class="left">
+            <img src="../assets/left-line.png">
+          </div>
+          <svg fill="#fff">
+            <use xlink:href="#wechat" />
+          </svg>
+          <div class="right">
+            <img src="../assets/right-line.png">
+          </div>
+        </div>
+        <div class="app-oauth__btn">
+          点击使用
+          <a class="app-oauth__btn-weixin" href="/user/auth/weixin?from='/wechat'">微信登录</a>
+        </div>
+      </div>
     </div>
 
-    <!-- 账号登录 -->
-    <form class="app-login__form" novalidate>
-      <div class="form-item">
-        <svg fill="#888"><use xlink:href="#avatar"/></svg>
-        <input type="text" v-model="form.username" @blur="blurUserName" placeholder="请输入光鱼账号">
-      </div>
-      <div class="form-item">
-        <svg fill="#888"><use xlink:href="#lock"/></svg>
-        <input type="password" v-model="form.password" placeholder="请输入密码">
-        <span v-show="formError.global" class="error is-danger">{{ formError.global }}</span>
-      </div>
-      <div class="form-submit">
-        <button type="button" @click="formSubmit">登录</button>
-      </div>
-    </form>
 
-    <!-- 微信登录 -->
-    <div class="app-oauth__login">
-      <div class="app-oauth__icon">
-        <div class="left">
-          <img src="../assets/left-line.png">
-        </div>
-        <svg fill="#fff"><use xlink:href="#wechat"/></svg>
-        <div class="right">
-          <img src="../assets/right-line.png">
-        </div>
-      </div>
-      <div class="app-oauth__btn">
-        点击使用<a class="app-oauth__btn-weixin" href="/user/auth/weixin?from='/wechat'">微信登录</a>
-      </div>
-    </div>
-
-    <toast
-      :message = "toast.msg"
-      iconClass = "success"
-      :toastShow.sync = "toast.visible"
-      @toastClose = 'loginSkip'
-    ></toast>
+    <toast :message="toast.msg" iconClass="success" :toastShow.sync="toast.visible" @toastClose='loginSkip'></toast>
   </div>
 </template>
+
 
 <script>
 
@@ -149,23 +155,25 @@ export default {
 <style lang="postcss">
 .app-login {
   width: 100vw;
-  height: 100vmax;
+  min-height: 100vmax;
   overflow: hidden;
   background: url("../assets/bg.jpg") no-repeat top center;
   background-size: cover;
 
   &__logo {
     text-align: center;
-    margin: 120px 235px;
+    margin: 120px 0;
   }
 
   &__form {
     width: 560px;
+    max-width: inherit;
     margin: 0 auto;
 
     .form-item {
       display: flex;
       justify-content: flex-start;
+      align-items: center;
       font-size: 26px;
       border: 1px solid #b5b5b5;
       border-radius: 10px;
@@ -220,7 +228,8 @@ export default {
 .app-oauth {
 
   &__login {
-    margin-top: 270px;
+    margin-top: 20%;
+    padding: 30px 0;
   }
 
   &__icon {
@@ -254,6 +263,68 @@ export default {
     a {
       color: #439FFA;
       margin-left: 1em;
+    }
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .app-login {
+    min-height: 100%;
+
+    &__max {
+      max-width: 640px;
+      margin: 0 auto;
+
+      .app-login__logo {
+        margin: 80px 0;
+      }
+
+      .app-login__form {
+
+        .form-item {
+          border-radius: 10px;
+          font-size: 16px;
+          line-height: 24px;
+          margin-bottom: 24px;
+          padding: 10px 14px;
+
+          & svg {
+            width: 24px;
+            height: 24px;
+          }
+
+          & input {
+            line-height: 24px;
+            margin-left: 14px;
+          }
+
+          .error {
+            bottom: -30px;
+            font-size: 16px;
+          }
+        }
+
+        .form-submit {
+          padding-top: 20px;
+
+          button[type="button"] {
+            height: 42px;
+            font-size: 20px;
+            border-radius: 10px;
+          }
+        }
+      }
+
+      .app-oauth {
+        &__login {
+          margin-top: 10%;
+        }
+
+        &__btn {
+          font-size: 18px;
+          margin-top: 10px;
+        }
+      }
     }
   }
 }
