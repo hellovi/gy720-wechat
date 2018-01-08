@@ -5,7 +5,7 @@
   >
     <!-- 进度条 -->
     <Progress
-      v-if="scene.percent > 0"
+      v-if="scene.percent > 0 && scene.percent < 100"
       :percent="scene.percent"
     />
 

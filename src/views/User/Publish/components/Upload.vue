@@ -44,19 +44,8 @@ export default {
     }
   },
 
-  computed: {
-    headers() {
-      return {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      }
-    },
-  },
-
   methods: {
-    // 图片格式校验
+    // 图片标准校验
     onChange(event) {
       [...event.target.files].forEach((file) => {
         // 校验图片格式
@@ -113,11 +102,14 @@ export default {
 
       // 定义一个XMLHttpRequest对象
       const xhr = new XMLHttpRequest()
+      // 定义接口地址和提交形式
       xhr.open('POST', '/user/sourcescene/uploadnormal', true)
+      // 设置请求头参数
       xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token')}`)
       xhr.setRequestHeader('Accept', 'application/json')
       // xhr.setRequestHeader('Content-Type', 'application/json')
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+      // 设置提交数据
       xhr.send(formData)
 
       // 监听回调
@@ -128,12 +120,14 @@ export default {
         // console.log(code, reason, result)
 
         if (code === 0) {
+          // 将接口返回的错误信息，如：“图片宽高比例不是2:1” 展示在遮罩层上
           this.$emit('update-scene', +result.upload_id, {
             reason,
           })
-          // 先注释移除事件
+          // 发射事件，延时几秒后移除该场景
           this.$emit('remove-scene', +result.upload_id)
         } else {
+          // 上传成功后先自定义一个提示，并且将该场景信息更新和补充
           this.$emit('update-scene', +result.upload_id, {
             ...result,
             reason: '正在排队中...',

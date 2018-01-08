@@ -56,8 +56,17 @@
 </template>
 
 <script>
+
+import ImgMask from './components/ImgMask'
+import Upload from './components/Upload'
+
 export default {
   name: 'Publish',
+
+  components: {
+    ImgMask,
+    Upload,
+  },
 
   data() {
     return {
@@ -114,7 +123,7 @@ export default {
     removeScene(id) {
       const index = this.scenes
         .findIndex(({ upload_id }) => upload_id === id)
-      // 延时四秒删除该场景
+      // 延时三秒删除该场景
       setTimeout(() => {
         this.scenes.splice(index, 1)
       }, 3000)
