@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="visible"
-    class="confirm"
+    class="confirm max-confirm"
     @click="onCancel"
   >
     <div class="confirm__mask"></div>
@@ -154,6 +154,36 @@ export default {
       color: var(--border-color);
       transform-origin: 0 0;
       transform: scaleY(0.5);
+    }
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .confirm {
+    &.max-confirm {
+      .confirm__dialog {
+        max-width: 320px;
+        border-radius: 16px;
+      }
+
+      .confirm__title {
+        font-size: 20px;
+        padding: 20px 0 10px 0;
+
+        & > strong {
+          font-size: 20px;
+        }
+      }
+
+      .confirm__content {
+        font-size: 16px;
+        min-height: 40px;
+        padding: 0px 10px 20px;
+      }
+
+      .confirm__footer {
+        line-height: 60px;
+      }
     }
   }
 }

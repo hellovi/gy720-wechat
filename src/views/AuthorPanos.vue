@@ -2,7 +2,7 @@
   <div class="author">
 
     <!-- 头部 -->
-    <div class="author__header">
+    <div class="author__header max__header">
       <!-- 头像 -->
       <img
         v-qiniu-src="format('avatar')"
@@ -43,10 +43,10 @@
       :on-refresh="refresh"
       :on-infinite="infinite"
       ref="scrollerList"
-      class="author__scroller"
+      class="author__scroller max-top"
     >
       <!-- 作品列表 -->
-      <ul class="list author__list">
+      <ul class="list author__list max__list">
         <li v-for="(item,index) in data" :key="index">
           <!-- 封面 -->
           <a
@@ -376,6 +376,143 @@ export default {
 
   &__confirm {
     color:var(--error-color);
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .author {
+    &__header {
+      &.max__header {
+        height: var(--header-height);
+
+        .author__header__avatar {
+          width: var(--avatar-width);
+          height: var(--avatar-width);
+        }
+
+        .author__header__meta {
+          flex-grow: 1;
+          padding: 0 var(--header-padding);
+          min-width: 0;
+
+          & > div {
+            font-size: 32px;
+            margin-bottom: 24px;
+          }
+
+          &__tag {
+            margin: 0 40px 0 20px;
+            padding: 0 10px;
+            height: 40px;
+            line-height: 40px;
+            color: #fff;
+            background-color: #FF8A00;
+            font-size: 24px;
+            flex-shrink: 0;
+          }
+
+          & > ul {
+
+            & > li {
+              font-size: 24px;
+              margin-right:24px;
+            }
+          }
+        }
+
+        .author__header__btn {
+          width: var(--avatar-width);
+          height: var(--btn-height);
+          line-height: var(--btn-height);
+          border-radius: 10px;
+          font-size: 28px;
+        }
+      }
+    }
+
+    &__scroller {
+      &.max-top {
+        &.list-scroller {
+          padding-top: var(--header-height);
+        }
+      }
+    }
+
+    &__list {
+      &.max__list {
+        padding: 20px 20px 0;
+
+        > li {
+          margin: 0 20px 20px 0;
+          display: inline-block;
+        }
+
+        .author__list__meta {
+          font-size: 14px;
+          height: 40px;
+          line-height: 40px;
+          & > a {
+            height: calc(var(--meta-height) * 0.5);
+            width: calc(var(--meta-height) * 0.5);
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 749px) {
+  .author {
+
+    &__list {
+      &.max__list {
+
+        > li {
+          width: calc((100vw - 60px) / 2);
+
+          &:nth-child(2n+0) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1023px) {
+  .author {
+
+    &__list {
+      &.max__list {
+
+        > li {
+          width: calc((100vw - 80px) / 3);
+
+          &:nth-child(3n+0) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .author {
+
+    &__list {
+      &.max__list {
+
+        > li {
+          width: calc((100vw - 100px) / 4);
+
+          &:nth-child(4n+0) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
   }
 }
 
