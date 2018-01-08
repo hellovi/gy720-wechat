@@ -207,6 +207,7 @@ export default {
           const title = `${achieve.nickname} - ${process.env.COMPANY_NAME}`
           this.shareInfo = {
             title,
+            imgUrl: this.$url.static(achieve.avatar),
           }
           this.setWxTitle(title)
         })

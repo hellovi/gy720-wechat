@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-29 16:51:16
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-05 11:42:45
+ * @Last Modified time: 2018-01-08 16:09:35
  */
 
 import wx from 'weixin-js-sdk'
@@ -49,11 +49,12 @@ export default {
         shareLogo,
       } = this.weixinSDKConfig
       const config = {
-        title: document.title, // 分享标题
-        link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        imgUrl: shareLogo, // 分享图标
-        desc: `${seo.keywords} -- ${seo.description}`, // 分享描述
-        ...info,
+        title: info.title || document.title, // 分享标题
+        link: info.link || window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: info.imgUrl || shareLogo, // 分享图标
+        desc: info.desc || `${seo.keywords} -- ${seo.description}`, // 分享描述
+        type: info.type || 'link', // 分享类型,music、video或link，不填默认为link
+        dataUrl: info.dataUrl || '', // 如果type是music或video，则要提供数据链接，默认为空
       }
       wx.ready(() => {
         // 分享到朋友圈
@@ -66,8 +67,6 @@ export default {
 
         // 分享给朋友
         wx.onMenuShareAppMessage({
-          // type: '', // 分享类型,music、video或link，不填默认为link
-          // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
           success: () => {
             // 用户确认分享后执行的回调函数
           },
