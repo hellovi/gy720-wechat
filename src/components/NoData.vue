@@ -54,4 +54,18 @@ export default {
     fill: var(--text-color);
   }
 }
+
+@media screen and (min-width: 640px) {
+  .nodata {
+    &__content {
+      margin-left: 10px;
+      font-size: 12px;
+    }
+
+    &__svg {
+      width: calc(var(--svg-width) * 0.4);
+      height: calc(var(--svg-width) * 0.4);
+    }
+  }
+}
 </style>
