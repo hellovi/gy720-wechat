@@ -95,6 +95,7 @@
 
 <script>
 import { scroller, weixinsdk } from '@/mixins'
+import { Http } from '@/utils'
 
 export default {
   name: 'AuthorPanos',
@@ -216,7 +217,27 @@ export default {
 
   created() {
     if (!this.isMyPanos) {
-      this.getAuthorData()
+      // this.getAuthorData()
+    }
+  },
+
+  beforeRouteEnter(to, from, next) {
+    if (to.path !== '/user/mypanos') {
+      Http.get(`/wechatapi/authorachieve/${to.params.id}`)
+        .then(({ result: { achieve } }) => {
+          next((vm) => {
+            /* eslint-disable */
+            vm.achieve = { ...vm.achieve, ...achieve }
+            const title = `${achieve.nickname} - ${process.env.COMPANY_NAME}`
+            vm.shareInfo = {
+              title,
+              imgUrl: vm.$url.static(achieve.avatar),
+            }
+            vm.setWxTitle(title)
+          })
+        })
+    } else {
+      next()
     }
   },
 
