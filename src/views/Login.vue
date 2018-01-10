@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-08 15:04:00
+ * @Last Modified time: 2018-01-10 10:18:35
  */
 
 <template>
@@ -48,7 +48,7 @@
         </div>
         <div class="app-oauth__btn">
           点击使用
-          <a class="app-oauth__btn-weixin" href="/user/auth/weixin?from='/wechat'">微信登录</a>
+          <a class="app-oauth__btn-weixin" href="/user/auth/weixin?from=/wechat">微信登录</a>
         </div>
       </div>
     </div>
