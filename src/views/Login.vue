@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-10 10:18:35
+ * @Last Modified time: 2018-01-10 16:18:53
  */
 
 <template>
@@ -26,8 +26,8 @@
             <use xlink:href="#lock" />
           </svg>
           <input type="password" v-model="form.password" placeholder="请输入密码">
-          <span v-show="formError.global" class="error is-danger">{{ formError.global }}</span>
         </div>
+        <span v-if="formError.global" class="error is-danger">{{ formError.global }}</span>
         <div class="form-submit">
           <button type="button" @click="formSubmit">登录</button>
         </div>
@@ -169,6 +169,7 @@ export default {
     width: 560px;
     max-width: inherit;
     margin: 0 auto;
+    position: relative;
 
     .form-item {
       display: flex;
@@ -198,12 +199,12 @@ export default {
           outline: none;
         }
       }
+    }
 
-      .error {
-        position: absolute;
-        bottom: -40px;
-        font-size: 24px;
-      }
+    .error {
+      position: absolute;
+      margin-top: -30px;
+      font-size: 24px;
     }
 
     .form-submit {
@@ -297,11 +298,11 @@ export default {
             line-height: 24px;
             margin-left: 14px;
           }
+        }
 
-          .error {
-            bottom: -30px;
-            font-size: 16px;
-          }
+        .error {
+          margin-top: -20px;
+          font-size: 16px;
         }
 
         .form-submit {
