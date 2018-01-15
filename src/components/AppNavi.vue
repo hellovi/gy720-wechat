@@ -10,13 +10,13 @@
           v-for="item in items"
           :key="item.name"
         >
-          <router-link
+          <div
             class="app-menu__item max__item"
-            :to="item.to"
+            @click="routeSkip(item.to)"
           >
             <svg fill="#444"><use :xlink:href="`#${item.icon}`"/></svg>
             <span>{{ item.name }}</span>
-          </router-link>
+          </div>
         </li>
       </ul>
     </nav>
@@ -79,6 +79,14 @@ export default {
     // 展开/收回导航栏
     switchNav() {
       this.open = !this.open
+    },
+
+    // 菜单跳转
+    routeSkip(to) {
+      if (to === '/panos') {
+        this.open = false
+      }
+      this.$router.push(to)
     },
   },
 }
