@@ -19,7 +19,7 @@
 
     <!-- 格式和大小校验 -->
     <p class="upload__error" v-if="imgFormat">
-      不符合格式标准或大小标准的图片已被过滤
+      提示：不符合大小或格式标准的图片已被过滤
     </p>
   </div>
 </template>
@@ -47,15 +47,15 @@ export default {
   methods: {
     // 图片标准校验
     onChange(event) {
-      [...event.target.files].forEach((file) => {
+      this.imgFormat = false
+      const files = [...event.target.files]
+      files.forEach((file) => {
         // 校验图片格式
         const isMatch = /image\/(jpg|jpeg)/.test(file.type)
         // 校验图片大小
         const isLimited = file.size < 50 * 1024 * 1024
 
-        if (!isMatch) {
-          this.imgFormat = true
-        } else if (!isLimited) {
+        if (!isMatch || !isLimited) {
           this.imgFormat = true
         } else {
           this.imgPreview(file)
@@ -120,6 +120,7 @@ export default {
         // console.log(code, reason, result)
 
         if (code === 0) {
+          this.imgFormat = true
           // 将接口返回的错误信息，如：“图片宽高比例不是2:1” 展示在遮罩层上
           this.$emit('update-scene', +result.upload_id, {
             reason,
