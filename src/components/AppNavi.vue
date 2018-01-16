@@ -83,7 +83,8 @@ export default {
 
     // 菜单跳转
     routeSkip(to) {
-      if (to === '/panos') {
+      // 如在点击当前页面自动收起菜单
+      if (this.$route.fullPath === to) {
         this.open = false
       }
       this.$router.push(to)
