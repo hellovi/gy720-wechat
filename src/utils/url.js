@@ -2,7 +2,7 @@
  * @Author: chenliangshan
  * @Date: 2018-01-05 09:59:54
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-17 09:17:49
+ * @Last Modified time: 2018-01-18 14:18:59
  */
 
 import { Regex } from '@/utils'
@@ -25,7 +25,7 @@ const linkList = {
     cdn: 'http://www-statics.gy720.com/',
   },
 }
-const currentOrigin = window.location.origin
+const currentOrigin = `${window.location.origin}/`
 
 /**
  * 当前环境判断
