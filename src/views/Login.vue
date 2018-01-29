@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-29 13:29:40
+ * @Last Modified time: 2018-01-29 14:05:24
  */
 
 <template>
@@ -136,7 +136,7 @@ export default {
     // 页面跳转
     pathSkip(path = this.fromPath) {
       if (Regex.url(path)) {
-        window.location.replace = path
+        window.location.replace(path)
       } else {
         this.$router.replace(path)
       }
