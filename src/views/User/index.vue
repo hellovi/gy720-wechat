@@ -18,6 +18,11 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      sessionStorage.setItem('from-path', to.fullPath)
+    }
+
     Http.get('/wechatapi/achieve')
       .then(({ result: { achieve } }) => {
         next((vm) => {
@@ -28,7 +33,3 @@ export default {
   },
 }
 </script>
-
-<style>
-
-</style>

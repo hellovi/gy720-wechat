@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 14:17:25
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2018-01-10 16:18:53
+ * @Last Modified time: 2018-01-29 13:29:40
  */
 
 <template>
@@ -54,12 +54,14 @@
     </div>
 
 
-    <toast :message="toast.msg" iconClass="success" :toastShow.sync="toast.visible" @toastClose='loginSkip'></toast>
+    <toast :message="toast.msg" iconClass="success" :toastShow.sync="toast.visible" @toastClose='pathSkip'></toast>
   </div>
 </template>
 
 
 <script>
+
+import { Regex } from '@/utils'
 
 const isEmail = value => /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(value)
 const isMobile = value => /^1[34578]\d{9}$/.test(value)
@@ -81,6 +83,8 @@ export default {
         msg: '',
         visible: false,
       },
+
+      fromPath: '/',
 
       title: `${process.env.COMPANY_NAME}`,
     }
@@ -129,23 +133,24 @@ export default {
       }
     },
 
-    // 登录成功回调跳转
-    loginSkip() {
-      // TODO 跳转来自页面
-      this.$router.push('/')
-    },
-
-    pathSkip(path = '/') {
-      this.$router.push(path)
+    // 页面跳转
+    pathSkip(path = this.fromPath) {
+      if (Regex.url(path)) {
+        window.location.replace = path
+      } else {
+        this.$router.replace(path)
+      }
     },
   },
 
   beforeRouteEnter(to, from, next) {
     const token = localStorage.getItem('token')
     next((vm) => {
+      /* eslint-disable no-param-reassign */
+      vm.fromPath = to.query.from || '/'
       if (token) {
-        // 已登录返回首页
-        vm.pathSkip()
+        // 已登录返回默认页面
+        vm.pathSkip(vm.fromPath)
       }
     })
   },

@@ -3,7 +3,7 @@
  * @Author: chenliangshan
  * @Date: 2017-12-27 17:09:04
  * @Last Modified by: chenliangshan
- * @Last Modified time: 2017-12-28 11:00:17
+ * @Last Modified time: 2018-01-29 13:26:21
  */
 
 
@@ -54,8 +54,10 @@ class Http {
           }
           if (res.status.code === 401) {
             // 登录权限
+            const fromPath = sessionStorage.getItem('from-path')
+            sessionStorage.removeItem('from-path')
             localStorage.removeItem('token')
-            router.push('/login')
+            router.push(`/login${fromPath ? `?from=${fromPath}` : ''}`)
           }
           throw res
         })
